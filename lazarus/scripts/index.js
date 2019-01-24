@@ -1,68 +1,15 @@
+import { translate, scale, rotate, garbage_filter } from './utils.js'
+import { PhysicsComponent, ShipPhysicsComponent } from './components/physics_components.js'
+import { ColliderComponent, CircleColliderComponent } from './components/collider_components.js'
+import { AIInputComponent, PlayerInputDebugComponent, PlayerInputEngineComponent, PlayerInputWeaponComponent } from './components/input_components.js'
+import { MapGraphicsComponent, ShipGraphicsComponent, BulletGraphicsComponent, LootGraphicsComponent, WeaponGraphicsComponent } from './components/graphics_components.js'
+import { UserInputs, GameKeys } from './user_inputs.js'
+
 var c = document.getElementById("c");
 var ctx = c.getContext("2d");
 ctx.transform(1, 0, 0, -1, 0, c.height)
 ctx.lineWidth = 0.1;
 
-// utils
-
-function translate(context, x, y){
-  context.transform(1, 0, 0, 1, x, y)
-}
-
-function scale(context, sx, sy){
-  context.transform(sx, 0, 0, sy, 0, 0)
-}
-
-function rotate(context, theta){
-  context.transform(Math.cos(theta), Math.sin(theta), -Math.sin(theta), Math.cos(theta), 0, 0)
-}
-
-function garbage_filter(list, filter){
-  to_delete = []
-  for(i=0; i<list.length; i++){
-    if(filter(list[i])){
-      to_delete.push(i)
-    }
-  }
-  for(var i of to_delete.reverse()){
-    list.splice(i, 1)
-  }
-}
-
-// User input
-_pressed_keys = []
-class UserInputs {
-  static pressed_keys(){return _pressed_keys}
-  static pressed_key(k){return Boolean(_pressed_keys[k])}
-  static press_key(k){
-    _pressed_keys[k.keyCode] = true
-  }
-  static release_key(k){
-    _pressed_keys[k.keyCode] = false
-  }
-}
-addEventListener("keydown", UserInputs.press_key, false);
-addEventListener("keyup", UserInputs.release_key, true);
-var KeyCodes = Object.freeze({
-  SPACE: 32,
-  W: 87,
-  A: 65,
-  S: 83,
-  D: 68,
-  UP: 38,
-  DOWN: 40,
-  LEFT: 37,
-  RIGHT: 39
-})
-var GameKeys = Object.freeze({
-  FIRE: KeyCodes.SPACE,
-  ACCELERATE: KeyCodes.W,
-  DECCELERATE: KeyCodes.S,
-  TURN_CW: KeyCodes.D,
-  TURN_ACW: KeyCodes.A,
-  ZOOM_IN: KeyCodes.UP,
-  ZOOM_OUT: KeyCodes.DOWN
-})
 
 // Systems
 class CollisionSystem{
@@ -97,201 +44,7 @@ class CollisionSystem{
   }
 }
 
-collision_system = new CollisionSystem()
-
-// Components 
-
-class GraphicsComponent {
-}
-
-class MapGraphicsComponent extends GraphicsComponent {
-  draw(map, ctx){
-    var buff_strokeStyle = ctx.strokeStyle
-    ctx.strokeStyle = "#aaaaaa";
-    var N = 100
-    var step = 100
-    for(var i = 0; i<=N; i++){
-      ctx.beginPath()
-      ctx.moveTo(-N/2*step, i*step-N/2*step);
-      ctx.lineTo(N/2*step, i*step-N/2*step);
-      ctx.stroke()
-    }
-    for(var i = 0; i<=N; i++){
-      ctx.beginPath()
-      ctx.moveTo(i*step-N/2*step, -N/2*step);
-      ctx.lineTo(i*step-N/2*step, N/2*step);
-      ctx.stroke()
-    }
-    ctx.strokeStyle = buff_strokeStyle;
-  }
-}
-
-class ShipGraphicsComponent extends GraphicsComponent {
-  draw(ship, ctx){
-    var MODEL_RADIUS = 1
-    var buff_strokeStyle = ctx.strokeStyle
-    if(ship.collider_component.is_colliding){
-      ctx.strokeStyle = "#aa5555";
-    }
-    ctx.beginPath()
-    ctx.moveTo(0, 0);
-    ctx.lineTo(MODEL_RADIUS/2, 0);
-    ctx.stroke()
-    ctx.beginPath()
-    ctx.arc(0, 0, MODEL_RADIUS, 0, 2*Math.PI)
-    ctx.stroke()
-    ctx.strokeStyle = buff_strokeStyle;
-  }
-}
-
-class BulletGraphicsComponent extends GraphicsComponent {
-  draw(bullet, ctx){
-    ctx.beginPath()
-    ctx.arc(0, 0, 1, 0, 2*Math.PI)
-    ctx.stroke()
-  }
-}
-
-class LootGraphicsComponent extends GraphicsComponent {
-  draw(loot, ctx){
-    var buff_strokeStyle = ctx.strokeStyle
-    ctx.strokeStyle = "#aaaa00"
-    ctx.beginPath()
-    ctx.arc(0, 0, loot.size, 0, 2*Math.PI)
-    ctx.stroke()
-    ctx.strokeStyle = buff_strokeStyle
-  }
-}
-
-class WeaponGraphicsComponent extends GraphicsComponent {
-  draw(weapon, ctx){
-    var MODEL_SIZE = 1
-    ctx.beginPath()
-    ctx.rect(-0.75*MODEL_SIZE, -0.1*MODEL_SIZE, 1.5*MODEL_SIZE, 0.2*MODEL_SIZE)
-    ctx.stroke()
-  }
-}
-
-class ColliderComponent{
-  constructor(entity){
-    this.entity = entity
-    this.is_colliding = false
-    this.colliding_with = []
-  }
-}
-
-class CircleColliderComponent extends ColliderComponent {
-  constructor(entity, r){
-    super(entity)
-    this.radius = r
-    this.type = "circle"
-  }
-  collides_with(collider){
-    switch(collider.type){
-      case "circle":
-        // TODO: careful, only works for entities with no parent ATM
-        return Math.sqrt((this.entity.x-collider.entity.x)**2 + (this.entity.y-collider.entity.y)**2) < this.entity.size*this.radius + collider.entity.size*collider.radius
-        break
-    }
-  }
-}
-
-class PhysicsComponent {
-  update(obj, world, dt){
-    obj.x += obj.v_dir*Math.cos(obj.rot)
-    obj.y += obj.v_dir*Math.sin(obj.rot)
-    obj.rot += obj.v_rot
-  }
-}
-
-class ShipPhysicsComponent {
-  update(ship, world, dt){
-    if(ship.engine.accelerate){
-      ship.v_dir = Math.min(ship.v_dir+dt*ship.engine.delta_v, ship.engine.max_v)
-    } else if (ship.engine.deccelerate){
-      ship.v_dir = Math.max(ship.v_dir-dt*ship.engine.delta_v, -ship.engine.max_v)
-    } else {
-      if(ship.v_dir > 0){
-        ship.v_dir = Math.max(ship.v_dir-dt*V_FRICTION, 0)
-      } else {
-        ship.v_dir = Math.min(ship.v_dir+dt*V_FRICTION, 0)
-      }
-    }
-    if(ship.engine.turn_acw){
-      ship.v_rot = Math.min(ship.v_rot+dt*ship.engine.delta_v_rot, ship.engine.max_v_rot)
-    } else if (ship.engine.turn_cw){
-      ship.v_rot = Math.max(ship.v_rot-dt*ship.engine.delta_v_rot, -ship.engine.max_v_rot)
-    } else {
-      if(ship.v_rot > 0){
-        ship.v_rot = Math.max(ship.v_rot-dt*V_FRICTION_ROT, 0)
-      } else {
-        ship.v_rot = Math.min(ship.v_rot+dt*V_FRICTION_ROT, 0)
-      }
-    }
-    ship.x += ship.v_dir*Math.cos(ship.rot)
-    ship.y += ship.v_dir*Math.sin(ship.rot)
-    ship.rot += ship.v_rot
-  }
-}
-
-class InputComponent {
-}
-
-class AIInputComponent extends InputComponent {
-  constructor(){
-    super()
-  }
-  update(ship, world, dt){
-    
-  }
-}
-
-class PlayerInputEngineComponent extends InputComponent {
-  update(engine, world, dt){
-    if(UserInputs.pressed_key(GameKeys.ACCELERATE)){
-      engine.accelerate = true
-      engine.deccelerate = false
-    } else if (UserInputs.pressed_key(GameKeys.DECCELERATE)){
-      engine.deccelerate = true
-      engine.accelerate = false
-    } else {
-      engine.accelerate = false
-      engine.deccelerate = false
-    }
-    if(UserInputs.pressed_key(GameKeys.TURN_CW)){
-      engine.turn_cw = true
-      engine.turn_acw = false
-    } else if(UserInputs.pressed_key(GameKeys.TURN_ACW)){
-      engine.turn_cw = false
-      engine.turn_acw = true
-    } else {
-      engine.turn_cw = false
-      engine.turn_acw = false
-    }
-    
-  }
-}
-
-class PlayerInputWeaponComponent extends InputComponent {
-  update(weapon, world, dt){
-    if(UserInputs.pressed_key(GameKeys.FIRE)){
-      weapon.firing = true
-    } else {
-      weapon.firing = false
-    }
-  }
-}
-
-class PlayerInputDebugComponent extends InputComponent {
-  update(ship, world, dt){
-    if(UserInputs.pressed_key(KeyCodes.LEFT)){
-      ship.size*=1.1
-    }
-    if(UserInputs.pressed_key(KeyCodes.RIGHT)){
-      ship.size*=0.9
-    }
-  }
-}
+var collision_system = new CollisionSystem()
 
 // Camera
 
@@ -515,9 +268,6 @@ class Engine {
   }
 }
 
-V_FRICTION = 0.01
-V_FRICTION_ROT = 0.01
-
 class Ship {
   constructor(id, x, y, rot, size, engine, weapons=[]){
     this.type = "ship"
@@ -574,7 +324,7 @@ class Ship {
   }
 }
 
-world = new World()
+var world = new World()
 
 function loop(timestamp) {
   var dt = timestamp - lastRender;
