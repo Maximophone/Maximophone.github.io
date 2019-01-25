@@ -1,8 +1,11 @@
 class GraphicsComponent {
+    constructor(entity){
+	this.entity = entity
+    }
 }
 
 export class MapGraphicsComponent extends GraphicsComponent {
-    draw(map, ctx){
+    draw(ctx){
 	var buff_strokeStyle = ctx.strokeStyle
 	ctx.strokeStyle = "#aaaaaa";
 	var N = 100
@@ -24,10 +27,10 @@ export class MapGraphicsComponent extends GraphicsComponent {
 }
 
 export class ShipGraphicsComponent extends GraphicsComponent {
-    draw(ship, ctx){
+    draw(ctx){
 	var MODEL_RADIUS = 1
 	var buff_strokeStyle = ctx.strokeStyle
-	if(ship.collider_component.is_colliding){
+	if(this.entity.collider_component.is_colliding){
 	    ctx.strokeStyle = "#aa5555";
 	}
 	ctx.beginPath()
@@ -42,7 +45,7 @@ export class ShipGraphicsComponent extends GraphicsComponent {
 }
 
 export class BulletGraphicsComponent extends GraphicsComponent {
-    draw(bullet, ctx){
+    draw(ctx){
 	ctx.beginPath()
 	ctx.arc(0, 0, 1, 0, 2*Math.PI)
 	ctx.stroke()
@@ -50,21 +53,29 @@ export class BulletGraphicsComponent extends GraphicsComponent {
 }
 
 export class LootGraphicsComponent extends GraphicsComponent {
-    draw(loot, ctx){
+    draw(ctx){
 	var buff_strokeStyle = ctx.strokeStyle
 	ctx.strokeStyle = "#aaaa00"
 	ctx.beginPath()
-	ctx.arc(0, 0, loot.size, 0, 2*Math.PI)
+	ctx.arc(0, 0, this.entity.size, 0, 2*Math.PI)
 	ctx.stroke()
 	ctx.strokeStyle = buff_strokeStyle
     }
 }
 
 export class WeaponGraphicsComponent extends GraphicsComponent {
-    draw(weapon, ctx){
+    draw(ctx){
 	var MODEL_SIZE = 1
 	ctx.beginPath()
 	ctx.rect(-0.75*MODEL_SIZE, -0.1*MODEL_SIZE, 1.5*MODEL_SIZE, 0.2*MODEL_SIZE)
 	ctx.stroke()
     }
+}
+
+export var graphics_components = {
+    ship: ShipGraphicsComponent,
+    loot: LootGraphicsComponent,
+    bullet: BulletGraphicsComponent,
+    weapon: WeaponGraphicsComponent,
+    map: MapGraphicsComponent
 }

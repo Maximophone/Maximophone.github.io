@@ -4,6 +4,7 @@ import {Cannon} from './weapon_entity.js'
 import {collision_system} from '../systems/collision_system.js'
 import {physics_system} from '../systems/physics_system.js'
 import {input_system} from '../systems/input_system.js'
+import {graphics_system} from '../systems/graphics_system.js'
 import {garbage_filter, rotate} from '../utils.js'
 import {Camera} from './camera.js'
 import {Map} from './map.js'
@@ -45,36 +46,37 @@ export class World {
 	this.camera.update()
     }
     draw(){
-	this.context.clearRect(0, 0, c.width, c.height);
-	this.draw_entity(this.map)
-	for(var entity of this.entities){
-	    this.draw_entity(entity)
-	}
+	// this.context.clearRect(0, 0, c.width, c.height);
+	graphics_system.draw(this.context, this.camera) // careful, the map needs to be drawn first
+	// this.draw_entity(this.map)
+	// for(var entity of this.entities){
+	//     this.draw_entity(entity)
+	// }
     }
-    draw_entity(entity){
-	if(entity.graphics_component){
-	    var parents_chain = [entity]
-	    while(entity.parent){
-		entity = entity.parent
-		parents_chain.push(entity)
-	    }
-	    this.context.transform(1/this.camera.scale, 0, 0, 1/this.camera.scale, 0, 0)
-	    this.context.transform(1, 0, 0, 1, -this.camera.x, -this.camera.y)
-	    for(var entity of parents_chain.reverse()){
-		this.context.transform(1, 0, 0, 1, entity.x, entity.y)
-		rotate(this.context, entity.rot)
-		var size = entity.size || 1
-		this.context.transform(size, 0, 0, size, 0, 0)
-	    }
-	    entity.graphics_component.draw(entity, this.context)
-	    for(var entity of parents_chain.reverse()){
-		var size = entity.size || 1
-		this.context.transform(1/size, 0, 0, 1/size, 0, 0)
-		rotate(this.context, -entity.rot)
-		this.context.transform(1, 0, 0, 1, -entity.x, -entity.y)
-	    }
-	    this.context.transform(1, 0, 0, 1, this.camera.x, this.camera.y)
-	    this.context.transform(this.camera.scale, 0, 0, this.camera.scale, 0, 0)
-	}
-    }
+    // draw_entity(entity){
+    // 	if(entity.graphics_component){
+    // 	    var parents_chain = [entity]
+    // 	    while(entity.parent){
+    // 		entity = entity.parent
+    // 		parents_chain.push(entity)
+    // 	    }
+    // 	    this.context.transform(1/this.camera.scale, 0, 0, 1/this.camera.scale, 0, 0)
+    // 	    this.context.transform(1, 0, 0, 1, -this.camera.x, -this.camera.y)
+    // 	    for(var entity of parents_chain.reverse()){
+    // 		this.context.transform(1, 0, 0, 1, entity.x, entity.y)
+    // 		rotate(this.context, entity.rot)
+    // 		var size = entity.size || 1
+    // 		this.context.transform(size, 0, 0, size, 0, 0)
+    // 	    }
+    // 	    entity.graphics_component.draw(entity, this.context)
+    // 	    for(var entity of parents_chain.reverse()){
+    // 		var size = entity.size || 1
+    // 		this.context.transform(1/size, 0, 0, 1/size, 0, 0)
+    // 		rotate(this.context, -entity.rot)
+    // 		this.context.transform(1, 0, 0, 1, -entity.x, -entity.y)
+    // 	    }
+    // 	    this.context.transform(1, 0, 0, 1, this.camera.x, this.camera.y)
+    // 	    this.context.transform(this.camera.scale, 0, 0, this.camera.scale, 0, 0)
+    // 	}
+    // }
 }

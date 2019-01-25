@@ -1,4 +1,4 @@
-import { LootGraphicsComponent } from '../components/graphics_components.js'
+import { graphics_system } from '../systems/graphics_system.js'
 import { physics_system } from '../systems/physics_system.js'
 import { collision_system } from '../systems/collision_system.js'
 
@@ -13,7 +13,7 @@ export class Loot {
 	this.size = size
 	this.lifetime = 5000+Math.random()*5000
 	
-	this.graphics_component = new LootGraphicsComponent()
+	this.graphics_component = graphics_system.get_component("loot", this)
 	this.collider_component = collision_system.get_component("circle", this)
 	this.physics_component = physics_system.get_component("bullet", this)
     }

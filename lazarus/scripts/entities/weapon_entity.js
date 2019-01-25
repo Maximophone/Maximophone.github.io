@@ -1,5 +1,5 @@
 import { input_system } from '../systems/input_system.js'
-import { WeaponGraphicsComponent } from '../components/graphics_components.js'
+import { graphics_system } from '../systems/graphics_system.js'
 import { Bullet } from './bullet_entity.js'
 
 export class Weapon {
@@ -15,7 +15,7 @@ export class Weapon {
 	} else {
 	    this.input_component = input_system.get_component("ai", this)
 	}
-	this.graphics_component = new WeaponGraphicsComponent()
+	this.graphics_component = graphics_system.get_component("weapon", this)
     }
 }
 

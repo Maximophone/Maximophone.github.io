@@ -1,7 +1,7 @@
 import { physics_system } from '../systems/physics_system.js'
 import { input_system } from '../systems/input_system.js'
 import { collision_system } from '../systems/collision_system.js'
-import { ShipGraphicsComponent } from '../components/graphics_components.js'
+import { graphics_system } from '../systems/graphics_system.js'
 import { Loot } from './loot_entity.js'
 
 export class Ship {
@@ -19,7 +19,7 @@ export class Ship {
 	this.weapons = weapons
 	this.engine = engine
 	this.physics_component = physics_system.get_component("ship", this)
-	this.graphics_component = new ShipGraphicsComponent()
+	this.graphics_component = graphics_system.get_component("ship", this)
 	this.collider_component = collision_system.get_component("circle", this)
 	this.input_component = input_system.get_component("debug", this)
     }
