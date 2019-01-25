@@ -16,7 +16,7 @@ export class Bullet {
 	this.lifetime = 5000
 	this.physics_component = physics_system.get_component("bullet", this)
 	this.graphics_component = new BulletGraphicsComponent()
-	this.collider_component = collision_system.get_circle_collider(this, 1)
+	this.collider_component = collision_system.get_component("circle", this)
     }
     update(world, dt){
 	this.lifetime -= dt

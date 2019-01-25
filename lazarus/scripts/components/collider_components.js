@@ -7,7 +7,7 @@ export class ColliderComponent{
 }
 
 export class CircleColliderComponent extends ColliderComponent {
-    constructor(entity, r){
+    constructor(entity, r=1){
 	super(entity)
 	this.radius = r
 	this.type = "circle"
@@ -20,4 +20,8 @@ export class CircleColliderComponent extends ColliderComponent {
             break
 	}
     }
+}
+
+export var collider_components = {
+    circle: CircleColliderComponent
 }

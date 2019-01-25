@@ -1,27 +1,24 @@
-import { CircleColliderComponent } from '../components/collider_components.js'
+import { System } from './systems.js'
+import { collider_components } from '../components/collider_components.js'
 import { garbage_filter } from '../utils.js'
 
-class CollisionSystem{
+class CollisionSystem extends System {
     constructor(){
-	this.colliders = []
-    }
-    get_circle_collider(entity, r){
-	var circle_collider = new CircleColliderComponent(entity, r)
-	this.colliders.push(circle_collider)
-	return circle_collider
+	super()
+	this.components_dict = collider_components
     }
     update(){
 	// clean up
-	for(var collider of this.colliders){
+	for(var collider of this.components){
 	    collider.colliding_with = []
 	    collider.is_colliding = false
 	}
-	garbage_filter(this.colliders, item => item.entity.lifetime < 0)
+	this.garbage_collect()
 	
-	for(var i = 0; i<this.colliders.length; i++){
-	    for(var j = i+1; j<this.colliders.length; j++){
-		var collider1 = this.colliders[i]
-		var collider2 = this.colliders[j]
+	for(var i = 0; i<this.components.length; i++){
+	    for(var j = i+1; j<this.components.length; j++){
+		var collider1 = this.components[i]
+		var collider2 = this.components[j]
 		if(collider1.collides_with(collider2)){
 		    collider1.is_colliding = true
 		    collider2.is_colliding = true

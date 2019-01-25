@@ -14,7 +14,7 @@ export class Loot {
 	this.lifetime = 5000+Math.random()*5000
 	
 	this.graphics_component = new LootGraphicsComponent()
-	this.collider_component = collision_system.get_circle_collider(this, 1)
+	this.collider_component = collision_system.get_component("circle", this)
 	this.physics_component = physics_system.get_component("bullet", this)
     }
     update(world, dt){

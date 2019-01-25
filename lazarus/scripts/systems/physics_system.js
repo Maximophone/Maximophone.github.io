@@ -1,17 +1,13 @@
-import { garbage_filter } from '../utils.js'
+import { System } from './systems.js'
 import { physics_components } from '../components/physics_components.js'
 
-class PhysicsSystem {
+class PhysicsSystem extends System {
     constructor(){
-	this.components = []
-    }
-    get_component(type, entity){
-	var component = new physics_components[type](entity)
-	this.components.push(component)
-	return component
+	super()
+	this.components_dict = physics_components
     }
     update(dt){
-	garbage_filter(this.components, component => component.entity.lifetime<=0)
+	this.garbage_collect()
 	for(var component of this.components){
 	    component.update(dt)
 	}

@@ -1,8 +1,8 @@
 import { physics_system } from '../systems/physics_system.js'
 import { input_system } from '../systems/input_system.js'
+import { collision_system } from '../systems/collision_system.js'
 import { ShipGraphicsComponent } from '../components/graphics_components.js'
 import { Loot } from './loot_entity.js'
-import { collision_system } from '../systems/collision_system.js'
 
 export class Ship {
     constructor(id, x, y, rot, size, engine, weapons=[]){
@@ -20,7 +20,7 @@ export class Ship {
 	this.engine = engine
 	this.physics_component = physics_system.get_component("ship", this)
 	this.graphics_component = new ShipGraphicsComponent()
-	this.collider_component = collision_system.get_circle_collider(this, 1)
+	this.collider_component = collision_system.get_component("circle", this)
 	this.input_component = input_system.get_component("debug", this)
     }
     spawn_loot(world){
