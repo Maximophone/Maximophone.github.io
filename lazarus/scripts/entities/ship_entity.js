@@ -1,6 +1,6 @@
 import { physics_system } from '../systems/physics_system.js'
+import { input_system } from '../systems/input_system.js'
 import { ShipGraphicsComponent } from '../components/graphics_components.js'
-import { PlayerInputDebugComponent } from '../components/input_components.js'
 import { Loot } from './loot_entity.js'
 import { collision_system } from '../systems/collision_system.js'
 
@@ -21,7 +21,7 @@ export class Ship {
 	this.physics_component = physics_system.get_component("ship", this)
 	this.graphics_component = new ShipGraphicsComponent()
 	this.collider_component = collision_system.get_circle_collider(this, 1)
-	this.input_component = new PlayerInputDebugComponent()
+	this.input_component = input_system.get_component("debug", this)
     }
     spawn_loot(world){
 	var n_loot = 5
@@ -31,7 +31,6 @@ export class Ship {
 	}
     }
     update(world, dt){
-	this.input_component.update(this, world, dt)
 	if(this.collider_component.is_colliding){
 	    for(var collider of this.collider_component.colliding_with){
 		switch(collider.entity.type){

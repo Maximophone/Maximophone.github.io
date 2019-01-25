@@ -1,60 +1,67 @@
 import { UserInputs, KeyCodes, GameKeys } from '../user_inputs.js'
 
 class InputComponent {
+    constructor(entity){
+	this.entity = entity
+    }
 }
 
 export class AIInputComponent extends InputComponent {
-    constructor(){
-	super()
-    }
-    update(ship, world, dt){
+    update(){
 	
     }
 }
 
 export class PlayerInputEngineComponent extends InputComponent {
-    update(engine, world, dt){
+    update(){
 	if(UserInputs.pressed_key(GameKeys.ACCELERATE)){
-	    engine.accelerate = true
-	    engine.deccelerate = false
+	    this.entity.accelerate = true
+	    this.entity.deccelerate = false
 	} else if (UserInputs.pressed_key(GameKeys.DECCELERATE)){
-	    engine.deccelerate = true
-	    engine.accelerate = false
+	    this.entity.deccelerate = true
+	    this.entity.accelerate = false
 	} else {
-	    engine.accelerate = false
-	    engine.deccelerate = false
+	    this.entity.accelerate = false
+	    this.entity.deccelerate = false
 	}
 	if(UserInputs.pressed_key(GameKeys.TURN_CW)){
-	    engine.turn_cw = true
-	    engine.turn_acw = false
+	    this.entity.turn_cw = true
+	    this.entity.turn_acw = false
 	} else if(UserInputs.pressed_key(GameKeys.TURN_ACW)){
-	    engine.turn_cw = false
-	    engine.turn_acw = true
+	    this.entity.turn_cw = false
+	    this.entity.turn_acw = true
 	} else {
-	    engine.turn_cw = false
-	    engine.turn_acw = false
+	    this.entity.turn_cw = false
+	    this.entity.turn_acw = false
 	}
 	
     }
 }
 
 export class PlayerInputWeaponComponent extends InputComponent {
-    update(weapon, world, dt){
+    update(){
 	if(UserInputs.pressed_key(GameKeys.FIRE)){
-	    weapon.firing = true
+	    this.entity.firing = true
 	} else {
-	    weapon.firing = false
+	    this.entity.firing = false
 	}
     }
 }
 
 export class PlayerInputDebugComponent extends InputComponent {
-    update(ship, world, dt){
+    update(){
 	if(UserInputs.pressed_key(KeyCodes.LEFT)){
-	    ship.size*=1.1
+	    this.entity.size*=1.1
 	}
 	if(UserInputs.pressed_key(KeyCodes.RIGHT)){
-	    ship.size*=0.9
+	    this.entity.size*=0.9
 	}
     }
+}
+
+export var input_components = {
+    ai: AIInputComponent,
+    engine: PlayerInputEngineComponent,
+    weapon: PlayerInputWeaponComponent,
+    debug: PlayerInputDebugComponent
 }

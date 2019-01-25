@@ -3,6 +3,7 @@ import {Engine} from './engine_entity.js'
 import {Cannon} from './weapon_entity.js'
 import {collision_system} from '../systems/collision_system.js'
 import {physics_system} from '../systems/physics_system.js'
+import {input_system} from '../systems/input_system.js'
 import {garbage_filter, rotate} from '../utils.js'
 import {Camera} from './camera.js'
 import {Map} from './map.js'
@@ -32,6 +33,7 @@ export class World {
 	this.camera = new Camera(0, 0, 1.5, player)
     }
     update(dt){
+	input_system.update()
 	collision_system.update()
 	physics_system.update(dt)
 	for(var entity of this.entities){

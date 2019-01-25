@@ -1,4 +1,4 @@
-import { PlayerInputWeaponComponent, AIInputComponent } from '../components/input_components.js'
+import { input_system } from '../systems/input_system.js'
 import { WeaponGraphicsComponent } from '../components/graphics_components.js'
 import { Bullet } from './bullet_entity.js'
 
@@ -11,9 +11,9 @@ export class Weapon {
 	this.parent = ship
 	this.firing = false
 	if(!ai){
-	    this.input_component = new PlayerInputWeaponComponent()
+	    this.input_component = input_system.get_component("weapon", this)
 	} else {
-	    this.input_component = new AIInputComponent()
+	    this.input_component = input_system.get_component("ai", this)
 	}
 	this.graphics_component = new WeaponGraphicsComponent()
     }
@@ -27,7 +27,6 @@ export class Cannon extends Weapon {
 	this.timer = 0
     }
     update(world, dt){
-	this.input_component.update(this, world, dt)
 	if(this.firing){
 	    if(this.timer <= 0){
 		var projectile = new Bullet(
