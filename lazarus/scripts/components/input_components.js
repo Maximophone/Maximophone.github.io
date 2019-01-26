@@ -51,10 +51,10 @@ export class PlayerInputWeaponComponent extends InputComponent {
 export class PlayerInputDebugComponent extends InputComponent {
     update(){
 	if(UserInputs.pressed_key(KeyCodes.LEFT)){
-	    this.entity.size*=1.1
+	    this.entity.position.size*=1.1
 	}
 	if(UserInputs.pressed_key(KeyCodes.RIGHT)){
-	    this.entity.size*=0.9
+	    this.entity.position.size*=0.9
 	}
     }
 }

@@ -2,6 +2,7 @@ import { physics_system } from '../systems/physics_system.js'
 import { input_system } from '../systems/input_system.js'
 import { collision_system } from '../systems/collision_system.js'
 import { graphics_system } from '../systems/graphics_system.js'
+import { position_system } from '../systems/position_system.js'
 import { ai_system } from '../systems/ai_system.js'
 import { Loot } from './loot_entity.js'
 
@@ -9,16 +10,17 @@ export class Ship {
     constructor(id, x, y, rot, size, engine, weapons=[], ai=false, target=null){
 	this.type = "ship"
 	this.id = id
-	this.x = x
-	this.y = y
-	this.rot = rot
-	this.size = size
+//	this.x = x
+//	this.y = y
+//	this.rot = rot
+//	this.size = size
 	this.v_dir = 0
 	this.v_rot = 0
 	this.health = 100
 	this.lifetime = 1
 	this.weapons = weapons
 	this.engine = engine
+	this.position = position_system.get_position(this, x, y, rot, size)
 	if (!ai){
 	    this.physics_component = physics_system.get_component("ship", this)
 	} else {
@@ -32,7 +34,7 @@ export class Ship {
 	var n_loot = 5
 	var v_loot = 0.5
 	for(var i = 0; i<n_loot; i++){
-	    world.entities.push(new Loot(this.x, this.y, Math.random()*2*Math.PI, v_loot))
+	    world.entities.push(new Loot(this.position.x, this.position.y, Math.random()*2*Math.PI, v_loot))
 	}
     }
     update(world, dt){
@@ -47,7 +49,7 @@ export class Ship {
 		    }
 		    break
 		case "loot":
-		    this.size *= 1.01
+		    this.position.size *= 1.01
 		    this.health *= 1.01
 		    collider.entity.lifetime = -1
 		}

@@ -9,9 +9,9 @@ class PhysicsComponent {
 
 class BulletPhysicsComponent extends PhysicsComponent {
   update(dt){
-    this.entity.x += this.entity.v_dir*Math.cos(this.entity.rot)
-    this.entity.y += this.entity.v_dir*Math.sin(this.entity.rot)
-    this.entity.rot += this.entity.v_rot
+    this.entity.position.x += this.entity.v_dir*Math.cos(this.entity.position.rot)
+    this.entity.position.y += this.entity.v_dir*Math.sin(this.entity.position.rot)
+    this.entity.position.rot += this.entity.v_rot
   }
 }
 
@@ -39,9 +39,9 @@ class ShipPhysicsComponent extends PhysicsComponent {
         this.entity.v_rot = Math.min(this.entity.v_rot+dt*V_FRICTION_ROT, 0)
       }
     }
-    this.entity.x += this.entity.v_dir*Math.cos(this.entity.rot)
-    this.entity.y += this.entity.v_dir*Math.sin(this.entity.rot)
-    this.entity.rot += this.entity.v_rot
+    this.entity.position.x += this.entity.v_dir*Math.cos(this.entity.position.rot)
+    this.entity.position.y += this.entity.v_dir*Math.sin(this.entity.position.rot)
+    this.entity.position.rot += this.entity.v_rot
   }
 }
 

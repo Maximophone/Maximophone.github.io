@@ -17,17 +17,17 @@ class GraphicsSystem extends System {
 	ctx.transform(1/camera.scale, 0, 0, 1/camera.scale, 0, 0)
 	ctx.transform(1, 0, 0, 1, -camera.x, -camera.y)
 	for(var entity of parents_chain.reverse()){
-	    ctx.transform(1, 0, 0, 1, entity.x, entity.y)
-	    rotate(ctx, entity.rot)
-	    var size = entity.size || 1
+	    ctx.transform(1, 0, 0, 1, entity.position.x, entity.position.y)
+	    rotate(ctx, entity.position.rot)
+	    var size = entity.position.size || 1
 	    ctx.transform(size, 0, 0, size, 0, 0)
 	}
 	component.draw(ctx, entity)
 	for(var entity of parents_chain.reverse()){
-	    var size = entity.size || 1
+	    var size = entity.position.size || 1
 	    ctx.transform(1/size, 0, 0, 1/size, 0, 0)
-	    rotate(ctx, -entity.rot)
-	    ctx.transform(1, 0, 0, 1, -entity.x, -entity.y)
+	    rotate(ctx, -entity.position.rot)
+	    ctx.transform(1, 0, 0, 1, -entity.position.x, -entity.position.y)
 	}
 	ctx.transform(1, 0, 0, 1, camera.x, camera.y)
 	ctx.transform(camera.scale, 0, 0, camera.scale, 0, 0)

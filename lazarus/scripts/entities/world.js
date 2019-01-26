@@ -7,6 +7,7 @@ import {ai_system} from '../systems/ai_system.js'
 import {input_system} from '../systems/input_system.js'
 import {graphics_system} from '../systems/graphics_system.js'
 import {particles_pool} from '../systems/particles_system.js'
+import {position_system} from '../systems/position_system.js'
 import {garbage_filter, rotate} from '../utils.js'
 import {Camera} from './camera.js'
 import {Map} from './map.js'
@@ -36,6 +37,7 @@ export class World {
 	this.camera = new Camera(0, 0, 1.5, player)
     }
     update(dt){
+	position_system.update()
 	input_system.update()
 	collision_system.update()
 	physics_system.update(dt)

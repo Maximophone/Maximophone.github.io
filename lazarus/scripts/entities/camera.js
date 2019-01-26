@@ -22,7 +22,7 @@ export class Camera{
 	    this.scale-=epsilon
 	}
 	//this.scale = this.target.size/20
-	this.x = this.target.x - c.width/2*this.scale
-	this.y = this.target.y - c.height/2*this.scale
+	this.x = this.target.position.x - c.width/2*this.scale
+	this.y = this.target.position.y - c.height/2*this.scale
     }
 }

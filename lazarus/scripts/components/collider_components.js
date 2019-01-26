@@ -18,7 +18,7 @@ export class CircleColliderComponent extends ColliderComponent {
 	switch(collider.type){
 	case "circle":
             // TODO: careful, only works for entities with no parent ATM
-	    return distance(this.entity, collider.entity) < this.entity.size*this.radius + collider.entity.size*collider.radius
+	    return distance(this.entity.position, collider.entity.position) < this.entity.position.size*this.radius + collider.entity.position.size*collider.radius
             break
 	}
     }
