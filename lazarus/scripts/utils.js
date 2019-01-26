@@ -21,3 +21,7 @@ export function garbage_filter(list, filter){
 	list.splice(i, 1)
     }
 }
+
+export function distance(entity1, entity2){
+    return Math.sqrt((entity1.x-entity2.x)**2 + (entity1.y-entity2.y)**2)
+}

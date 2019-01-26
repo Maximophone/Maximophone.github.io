@@ -2,10 +2,11 @@ import { physics_system } from '../systems/physics_system.js'
 import { input_system } from '../systems/input_system.js'
 import { collision_system } from '../systems/collision_system.js'
 import { graphics_system } from '../systems/graphics_system.js'
+import { ai_system } from '../systems/ai_system.js'
 import { Loot } from './loot_entity.js'
 
 export class Ship {
-    constructor(id, x, y, rot, size, engine, weapons=[]){
+    constructor(id, x, y, rot, size, engine, weapons=[], ai=false, target=null){
 	this.type = "ship"
 	this.id = id
 	this.x = x
@@ -18,7 +19,11 @@ export class Ship {
 	this.lifetime = 1
 	this.weapons = weapons
 	this.engine = engine
-	this.physics_component = physics_system.get_component("ship", this)
+	if (!ai){
+	    this.physics_component = physics_system.get_component("ship", this)
+	} else {
+	    this.ai_component = ai_system.get_component("ship", this, target)
+	}
 	this.graphics_component = graphics_system.get_component("ship", this)
 	this.collider_component = collision_system.get_component("circle", this)
 	this.input_component = input_system.get_component("debug", this)

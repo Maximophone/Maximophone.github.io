@@ -9,8 +9,6 @@ export class Engine {
 	this.delta_v_rot = delta_v_rot
 	if(!ai){
 	    this.input_component = input_system.get_component("engine", this)
-	} else {
-	    this.input_component = input_system.get_component("ai", this)
 	}
     }
     update(world, dt){

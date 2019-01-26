@@ -12,8 +12,6 @@ export class Weapon {
 	this.firing = false
 	if(!ai){
 	    this.input_component = input_system.get_component("weapon", this)
-	} else {
-	    this.input_component = input_system.get_component("ai", this)
 	}
 	this.graphics_component = graphics_system.get_component("weapon", this)
     }
