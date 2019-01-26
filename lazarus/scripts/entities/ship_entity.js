@@ -10,12 +10,6 @@ export class Ship {
     constructor(id, x, y, rot, size, engine, weapons=[], ai=false, target=null){
 	this.type = "ship"
 	this.id = id
-//	this.x = x
-//	this.y = y
-//	this.rot = rot
-//	this.size = size
-	this.v_dir = 0
-	this.v_rot = 0
 	this.health = 100
 	this.lifetime = 1
 	this.weapons = weapons

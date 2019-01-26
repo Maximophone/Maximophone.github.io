@@ -9,16 +9,12 @@ export class Bullet {
     constructor(id, x, y, rot, v, size=2, damage=10){
 	this.type = "bullet"
 	this.id = id
-	// this.x = x
-	// this.position.y = y
-	// this.rot = rot
-	this.v_dir = v
-	this.v_rot = 0
-	// this.size = size
 	this.damage = damage
 	this.lifetime = 5000
 	this.position = position_system.get_position(this, x, y, rot, size)
 	this.physics_component = physics_system.get_component("bullet", this)
+	this.physics_component.vx = v*Math.cos(rot)
+	this.physics_component.vy = v*Math.sin(rot)
 	this.graphics_component = graphics_system.get_component("bullet", this)
 	this.collider_component = collision_system.get_component("circle", this)
     }

@@ -10,8 +10,10 @@ class ShipAIComponent extends AIComponent {
 	this.target = target
     }
     update(){
-	this.entity.x += 0.5*Math.sign(this.target.x-this.entity.x)
-	this.entity.y += 0.5*Math.sign(this.target.y-this.entity.y)
+	var pos = this.entity.position
+	var target_pos = this.target.position
+	pos.x += 0.5*Math.sign(target_pos.x-pos.x)
+	pos.y += 0.5*Math.sign(target_pos.y-pos.y)
     }
 }
 

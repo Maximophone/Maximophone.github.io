@@ -78,7 +78,7 @@ export class LootGraphicsComponent extends GraphicsComponent {
 	this.save_style(ctx)
 	ctx.fillStyle = "#aaaa00"
 	ctx.beginPath()
-	ctx.arc(0, 0, this.entity.size, 0, 2*Math.PI)
+	ctx.arc(0, 0, 1, 0, 2*Math.PI)
 	ctx.fill()
 	this.load_style(ctx)
     }
