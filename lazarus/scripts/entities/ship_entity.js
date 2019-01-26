@@ -40,7 +40,11 @@ export class Ship {
 	    for(var collider of this.collider_component.colliding_with){
 		switch(collider.entity.type){
 		case "ship":
-		    this.health -= dt
+		    for(var collider of this.collider_component.colliding_with){
+			if(collider.entity.id && (collider.entity.id != this.id)){
+			    this.health -= dt
+			}
+		    }
 		    break
 		case "loot":
 		    this.size *= 1.01
