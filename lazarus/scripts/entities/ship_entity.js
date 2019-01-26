@@ -18,6 +18,7 @@ export class Ship {
 	if (!ai){
 	    this.physics_component = physics_system.get_component("ship", this)
 	} else {
+	    this.physics_component = physics_system.get_component("bullet", this)
 	    this.ai_component = ai_system.get_component("ship", this, target)
 	}
 	this.graphics_component = graphics_system.get_component("ship", this)

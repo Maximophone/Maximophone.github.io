@@ -30,7 +30,7 @@ export class World {
 	    var y = Math.random()*1000
 	    var engine = new Engine(10, 0.01, 0.05, 0.01, true)
 	    var ai = new Ship(2, x, y, 0, 17, engine, [], true, player)
-	    var cannon = new Cannon(ai, 1, 0, 0, 50, 5, true)
+	    var cannon = new Cannon(ai, 1, 0, 0, 200, 5, true)
 	    ai.weapons.push(cannon)
 	    this.entities.push(ai, engine, cannon)
 	}

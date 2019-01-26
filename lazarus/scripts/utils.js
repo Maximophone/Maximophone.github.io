@@ -22,6 +22,13 @@ export function garbage_filter(list, filter){
     }
 }
 
-export function distance(entity1, entity2){
-    return Math.sqrt((entity1.x-entity2.x)**2 + (entity1.y-entity2.y)**2)
+export function distance(position1, position2){
+    return Math.sqrt((position1.x-position2.x)**2 + (position1.y-position2.y)**2)
+}
+
+export function angle_to(position_from, position_to){
+    // returns min angle
+    var delta_x = position_to.x - position_from.x
+    var delta_y = position_to.y - position_from.y
+    return Math.atan2(delta_y, delta_x)
 }
