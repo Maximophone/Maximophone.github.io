@@ -39,7 +39,17 @@ export class PlayerInputEngineComponent extends InputComponent {
 	} else {
 	    this.entity.accelerate = false
 	    this.entity.deccelerate = false
-	}	
+	}
+	if(UserInputs.pressed_key(GameKeys.RIGHT)){
+	    this.entity.strafe_right = true
+	    this.entity.strafe_left = false
+	} else if (UserInputs.pressed_key(GameKeys.LEFT)){
+	    this.entity.strafe_right = false
+	    this.entity.strafe_left = true
+	} else {
+	    this.entity.strafe_right = false
+	    this.entity.strafe_left = false
+	}
     }
 }
 

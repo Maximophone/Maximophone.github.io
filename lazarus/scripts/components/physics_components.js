@@ -31,14 +31,26 @@ class ShipPhysicsComponent extends PhysicsComponent {
 	var position = this.entity.position
 	var cos = Math.cos(position.rot)
 	var sin = Math.sin(position.rot)
+	var cos_right = Math.cos(position.rot + Math.PI/2)
+	var sin_right = Math.sin(position.rot + Math.PI/2)
+	var cos_left = Math.cos(position.rot - Math.PI/2)
+	var sin_left = Math.sin(position.rot - Math.PI/2)
 	if(engine.accelerate){
 	    this.vx = cap_abs(this.vx + dt*engine.delta_v*cos, Math.abs(engine.max_v*cos))
 	    this.vy = cap_abs(this.vy + dt*engine.delta_v*sin, Math.abs(engine.max_v*sin))
 	} else if (engine.deccelerate){
 	    this.vx = cap_abs(this.vx - dt*engine.delta_v*cos, Math.abs(engine.max_v*cos))
 	    this.vy = cap_abs(this.vy - dt*engine.delta_v*sin, Math.abs(engine.max_v*sin))
-	} else {
-	    // FRICTION
+	}
+	if(engine.strafe_left){
+	    this.vx = cap_abs(this.vx + dt*engine.delta_v*cos_left, Math.abs(engine.max_v*cos_left))
+	    this.vy = cap_abs(this.vy + dt*engine.delta_v*sin_left, Math.abs(engine.max_v*sin_left))
+	} else if(engine.strafe_right){
+	    this.vx = cap_abs(this.vx + dt*engine.delta_v*cos_right, Math.abs(engine.max_v*cos_right))
+	    this.vy = cap_abs(this.vy + dt*engine.delta_v*sin_right, Math.abs(engine.max_v*sin_right))
+	}
+	// FRICTION
+	if(!engine.accelerate && !engine.deccelerate && !engine.strafe_right && !engine.strafe_left){
 	    if(this.v() > 0){
 		if(this.vx > 0){
 		    this.vx = Math.max(this.vx-dt*V_FRICTION, 0)

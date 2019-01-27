@@ -54,6 +54,10 @@ export var GameKeys = Object.freeze({
     DECCELERATE: KeyCodes.S,
     TURN_CW: KeyCodes.A,
     TURN_ACW: KeyCodes.D,
+    UP: KeyCodes.W,
+    DOWN: KeyCodes.S,
+    RIGHT: KeyCodes.D,
+    LEFT: KeyCodes.A,
     ZOOM_IN: KeyCodes.UP,
     ZOOM_OUT: KeyCodes.DOWN
 })
