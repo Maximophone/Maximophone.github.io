@@ -52,20 +52,26 @@ class ShipPhysicsComponent extends PhysicsComponent {
 		}
 	    }
 	}
-	if(engine.turn_acw){
-	    this.v_rot = Math.min(this.v_rot+dt*engine.delta_v_rot, engine.max_v_rot)
-	} else if (engine.turn_cw){
-	    this.v_rot = Math.max(this.v_rot-dt*engine.delta_v_rot, -engine.max_v_rot)
-	} else {
-	    if(this.v_rot > 0){
-		this.v_rot = Math.max(this.v_rot-dt*V_FRICTION_ROT, 0)
-	    } else {
-		this.v_rot = Math.min(this.v_rot+dt*V_FRICTION_ROT, 0)
+	if(position.rot != engine.target_angle){
+	    var delta = engine.target_angle - position.rot
+	    if(delta > Math.PI){
+		delta -= Math.PI*2
 	    }
-	}
+	    if(delta < -Math.PI){
+		delta += Math.PI*2
+	    }
+	    if(delta > 0){
+		this.entity.position.rot  += engine.delta_rot
+	    } else {
+		this.entity.position.rot -= engine.delta_rot
+	    }
+	    if(Math.abs(delta) < engine.delta_rot){
+	    	this.entity.position.rot = engine.target_angle
+	    }
+	}  
+	 
 	this.entity.position.x += this.vx
 	this.entity.position.y += this.vy
-	this.entity.position.rot += this.v_rot
     }
 }
 

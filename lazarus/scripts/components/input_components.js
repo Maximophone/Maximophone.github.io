@@ -1,4 +1,5 @@
 import { UserInputs, KeyCodes, GameKeys } from '../user_inputs.js'
+import { angle_to } from '../utils.js'
 
 class InputComponent {
     constructor(entity){
@@ -9,6 +10,21 @@ class InputComponent {
 export class AIInputComponent extends InputComponent {
     update(){
 	
+    }
+}
+
+export class MouseInputComponent extends InputComponent {
+    update(){
+	var mouse_target = UserInputs.get_mouse_target(true)
+	this.entity.position.x = mouse_target.x
+	this.entity.position.y = mouse_target.y
+    }
+}
+
+class PlayerInputShipComponent extends InputComponent {
+    update(){
+	var mouse_target = UserInputs.get_mouse_target(true)
+	this.entity.engine.target_angle = angle_to(this.entity.position, mouse_target)
     }
 }
 
@@ -23,18 +39,7 @@ export class PlayerInputEngineComponent extends InputComponent {
 	} else {
 	    this.entity.accelerate = false
 	    this.entity.deccelerate = false
-	}
-	if(UserInputs.pressed_key(GameKeys.TURN_CW)){
-	    this.entity.turn_cw = true
-	    this.entity.turn_acw = false
-	} else if(UserInputs.pressed_key(GameKeys.TURN_ACW)){
-	    this.entity.turn_cw = false
-	    this.entity.turn_acw = true
-	} else {
-	    this.entity.turn_cw = false
-	    this.entity.turn_acw = false
-	}
-	
+	}	
     }
 }
 
@@ -63,5 +68,7 @@ export var input_components = {
     ai: AIInputComponent,
     engine: PlayerInputEngineComponent,
     weapon: PlayerInputWeaponComponent,
+    ship: PlayerInputShipComponent,
+    mouse: MouseInputComponent,
     debug: PlayerInputDebugComponent
 }

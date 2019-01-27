@@ -10,19 +10,20 @@ import {graphics_system} from '../systems/graphics_system.js'
 import {particles_pool} from '../systems/particles_system.js'
 import {position_system} from '../systems/position_system.js'
 import {garbage_filter, rotate} from '../utils.js'
-import {Camera} from './camera.js'
+import {camera} from './camera.js'
+import {MousePointer} from './mouse_pointer_entity.js'
 import {Map} from './map.js'
 import {EnnemySpawner} from './spawner.js'
+import {UserInputs} from '../user_inputs.js'
 
 var PLAYER_HEALTH = 200
 
 export class World {
-    constructor(context){
-	this.context = context
+    constructor(){
 	this.map = new Map()
 	this.entities = []
-	
-	var engine = new Engine(10, 0.01, 0.05, 0.01)
+
+	var engine = new Engine(10, 0.01, 0.05)
 	var player = new Ship(1, 100, 100, 0, 20, PLAYER_HEALTH, engine)
 	var shield = new Shield(player, 3, 100, 0.01, 10000)
 	var weapon1 = new Cannon(player, 1, 0.5, 0.05, 50, 5)
@@ -32,7 +33,10 @@ export class World {
 	this.entities.push(player, engine, shield, weapon1, weapon2)
 
 	this.ennemy_spawner = new EnnemySpawner(this, player, 20000)
-	this.camera = new Camera(0, 0, 1.5, player)
+	this.mouse_pointer = new MousePointer(this.camera)
+
+	camera.set_target(player)
+	
     }
     update(dt){
 	this.ennemy_spawner.update(dt)
@@ -48,9 +52,9 @@ export class World {
 	    }
 	}
 	garbage_filter(this.entities, item => item.lifetime<0)
-	this.camera.update()
+	camera.update()
     }
-    draw(){
-	graphics_system.draw(this.context, this.camera) // careful, the map needs to be drawn first
+    draw(context){
+	graphics_system.draw(context) // careful, the map needs to be drawn first
     }
 }

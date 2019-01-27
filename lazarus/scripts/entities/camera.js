@@ -25,4 +25,9 @@ export class Camera{
 	this.x = this.target.position.x - c.width/2*this.scale
 	this.y = this.target.position.y - c.height/2*this.scale
     }
+    set_target(target){
+	this.target = target
+    }
 }
+
+export var camera = new Camera(0, 0, 1.5, null)

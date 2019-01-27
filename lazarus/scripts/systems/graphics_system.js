@@ -2,13 +2,14 @@ import { System } from './systems.js'
 import { rotate } from '../utils.js'
 import { graphics_components } from '../components/graphics_components.js'
 import { particles_pool } from '../systems/particles_system.js'
+import { camera } from '../entities/camera.js'
 
 class GraphicsSystem extends System {
     constructor(){
 	super()
 	this.components_dict = graphics_components
     }
-    draw_component(ctx, camera, entity, component){
+    draw_component(ctx, entity, component){
 	var parents_chain = [entity]
 	while(entity.parent){
 	    entity = entity.parent
@@ -33,15 +34,15 @@ class GraphicsSystem extends System {
 	ctx.transform(camera.scale, 0, 0, camera.scale, 0, 0)
     }
 
-    draw(ctx, camera){
+    draw(ctx){
 	this.garbage_collect(this.components)
 	ctx.clearRect(0, 0, c.width, c.height)
 	for(var component of this.components){
-	    this.draw_component(ctx, camera, component.entity, component)
+	    this.draw_component(ctx, component.entity, component)
 	}
 	for(var particle of particles_pool.particles){
 	    if(particle.in_use()){
-		this.draw_component(ctx, camera, particle, particle.graphics)
+		this.draw_component(ctx, particle, particle.graphics)
 	    }
 	}
     }

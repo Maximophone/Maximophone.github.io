@@ -20,13 +20,14 @@ export class Ship {
 	this.position = position_system.get_position(this, x, y, rot, size)
 	if (!ai){
 	    this.physics_component = physics_system.get_component("ship", this)
+	    this.input_component = input_system.get_component("ship", this)
 	} else {
 	    this.physics_component = physics_system.get_component("bullet", this)
 	    this.ai_component = ai_system.get_component("ship", this, target)
 	}
 	this.graphics_component = graphics_system.get_component("ship", this)
 	this.collider_component = collision_system.get_component("circle", this)
-	this.input_component = input_system.get_component("debug", this)
+	// this.input_component = input_system.get_component("ship", this)
     }
     spawn_loot(world){
 	var n_loot = 5

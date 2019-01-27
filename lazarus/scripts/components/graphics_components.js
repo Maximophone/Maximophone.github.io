@@ -109,6 +109,14 @@ class ShieldGraphicsComponent extends GraphicsComponent {
     }
 }
 
+class PointerGraphicsComponent extends GraphicsComponent {
+    draw(ctx){
+	ctx.beginPath()
+	ctx.arc(0, 0, 1, 0, 2*Math.PI)
+	ctx.stroke()
+    }
+}
+
 class StaticGraphicsComponent {
     static save_style(ctx){
 	this.style_buffer = {
@@ -145,5 +153,6 @@ export var graphics_components = {
     weapon: WeaponGraphicsComponent,
     map: MapGraphicsComponent,
     shield: ShieldGraphicsComponent,
+    pointer: PointerGraphicsComponent,
     fading_particle: FadingParticleGraphicsComponent
 }
