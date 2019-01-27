@@ -5,6 +5,7 @@ var ctx = c.getContext("2d");
 ctx.transform(1, 0, 0, -1, 0, c.height)
 ctx.lineWidth = 0.2;
 ctx.strokeStyle = "#ffffff"
+// ctx.globalCompositeOperation = 'multiply'
 
 var world = new World(ctx)
 

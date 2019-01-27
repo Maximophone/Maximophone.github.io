@@ -5,12 +5,14 @@ import { graphics_system } from '../systems/graphics_system.js'
 import { position_system } from '../systems/position_system.js'
 import { ai_system } from '../systems/ai_system.js'
 import { Loot } from './loot_entity.js'
+import { particles_pool } from '../systems/particles_system.js'
+import { graphics_components } from '../components/graphics_components.js'
 
 export class Ship {
-    constructor(id, x, y, rot, size, engine, weapons=[], ai=false, target=null){
+    constructor(id, x, y, rot, size, health, engine, weapons=[], ai=false, target=null){
 	this.type = "ship"
 	this.id = id
-	this.health = 100
+	this.health = health
 	this.lifetime = 1
 	this.weapons = weapons
 	this.engine = engine
@@ -56,6 +58,26 @@ export class Ship {
 	    for(var weapon of this.weapons){
 		weapon.lifetime = -1
 	    }
+	    particles_pool.create(
+		graphics_components.fading_particle,
+		"fading_particle",
+		this.position.x,
+		this.position.y,
+		0,
+		0,
+		200,
+		25
+	    )
+	    particles_pool.create(
+		graphics_components.fading_particle,
+		"fading_particle",
+		this.position.x,
+		this.position.y,
+		0,
+		0,
+		75,
+		50
+	    )
 	    this.spawn_loot(world)
 	}
     }

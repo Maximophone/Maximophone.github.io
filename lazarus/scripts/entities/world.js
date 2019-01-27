@@ -11,6 +11,9 @@ import {position_system} from '../systems/position_system.js'
 import {garbage_filter, rotate} from '../utils.js'
 import {Camera} from './camera.js'
 import {Map} from './map.js'
+import {EnnemySpawner} from './spawner.js'
+
+var PLAYER_HEALTH = 200
 
 export class World {
     constructor(context){
@@ -19,24 +22,17 @@ export class World {
 	this.entities = []
 	
 	var engine = new Engine(10, 0.01, 0.05, 0.01)
-	var player = new Ship(1, 100, 100, 0, 20, engine)
+	var player = new Ship(1, 100, 100, 0, 20, PLAYER_HEALTH, engine)
 	var weapon1 = new Cannon(player, 1, 0.5, 0.05, 50, 5)
 	var weapon2 = new Cannon(player, 1, -0.5, -0.05, 50, 5)
 	player.weapons.push(weapon1, weapon2)
 	this.entities.push(player, engine, weapon1, weapon2)
-	
-	for(var i = 0; i<10; i++){
-	    var x = Math.random()*1000
-	    var y = Math.random()*1000
-	    var engine = new Engine(10, 0.01, 0.05, 0.01, true)
-	    var ai = new Ship(2, x, y, 0, 17, engine, [], true, player)
-	    var cannon = new Cannon(ai, 1, 0, 0, 200, 5, true)
-	    ai.weapons.push(cannon)
-	    this.entities.push(ai, engine, cannon)
-	}
+
+	this.ennemy_spawner = new EnnemySpawner(this, player, 20000)
 	this.camera = new Camera(0, 0, 1.5, player)
     }
     update(dt){
+	this.ennemy_spawner.update(dt)
 	position_system.update()
 	input_system.update()
 	collision_system.update()

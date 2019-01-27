@@ -12,11 +12,10 @@ class ShipAIComponent extends AIComponent {
 	this.target = target
     }
     update(){
+	var SPEED = 0.5
 	var TURN_RATE = 0.04
 	var pos = this.entity.position
 	var target_pos = this.target.position
-	pos.x += 0.5*Math.sign(target_pos.x-pos.x)
-	pos.y += 0.5*Math.sign(target_pos.y-pos.y)
 	var target_angle = angle_to(pos, target_pos)
 	if(pos.rot != target_angle){
 	    var delta = target_angle - pos.rot
@@ -35,12 +34,13 @@ class ShipAIComponent extends AIComponent {
 		pos.rot = target_angle
 	    }
 	}
-// 	pos.rot += 0.01*Math.sign(pos.rot - angle_to(pos, target.pos))
 	if(distance(pos, target_pos)< 500){
 	    for(var weapon of this.entity.weapons){
 		weapon.firing = true
 	    }
 	}
+	pos.x += SPEED*Math.cos(pos.rot)
+	pos.y += SPEED*Math.sin(pos.rot)
     }
 }
 
