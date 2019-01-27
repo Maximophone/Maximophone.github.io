@@ -16,6 +16,7 @@ export class Ship {
 	this.lifetime = 1
 	this.weapons = weapons
 	this.engine = engine
+	this.shield = null
 	this.position = position_system.get_position(this, x, y, rot, size)
 	if (!ai){
 	    this.physics_component = physics_system.get_component("ship", this)
@@ -35,6 +36,9 @@ export class Ship {
 	}
     }
     update(world, dt){
+	if(this.shield){
+	    this.shield.update(world, dt)
+	}
 	if(this.collider_component.is_colliding){
 	    for(var collider of this.collider_component.colliding_with){
 		switch(collider.entity.type){

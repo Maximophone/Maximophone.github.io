@@ -6,13 +6,15 @@ class GraphicsComponent {
 	this.style_buffer = {
 	    fillStyle: ctx.fillStyle,
 	    strokeStyle: ctx.strokeStyle,
-	    lineWidth: ctx.lineWidth
+	    lineWidth: ctx.lineWidth,
+	    globalAlpha: ctx.globalAlpha
 	}
     }
     load_style(ctx){
 	ctx.fillStyle = this.style_buffer.fillStyle
 	ctx.strokeStyle = this.style_buffer.strokeStyle
 	ctx.lineWidth = this.style_buffer.lineWidth
+	ctx.globalAlpha = this.style_buffer.globalAlpha
     }
 }
 
@@ -93,6 +95,20 @@ export class WeaponGraphicsComponent extends GraphicsComponent {
     }
 }
 
+class ShieldGraphicsComponent extends GraphicsComponent {
+    draw(ctx){
+	if(this.entity.health > 0){
+	    this.save_style(ctx)
+	    ctx.fillStyle = "#bbbbff"
+	    ctx.globalAlpha = 0.2
+	    ctx.beginPath()
+	    ctx.arc(0, 0, 1, 0, 2*Math.PI)
+	    ctx.fill()
+	    this.load_style(ctx)
+	}
+    }
+}
+
 class StaticGraphicsComponent {
     static save_style(ctx){
 	this.style_buffer = {
@@ -128,5 +144,6 @@ export var graphics_components = {
     bullet: BulletGraphicsComponent,
     weapon: WeaponGraphicsComponent,
     map: MapGraphicsComponent,
+    shield: ShieldGraphicsComponent,
     fading_particle: FadingParticleGraphicsComponent
 }

@@ -1,6 +1,7 @@
 import {Ship} from './ship_entity.js'
 import {Engine} from './engine_entity.js'
 import {Cannon} from './weapon_entity.js'
+import {Shield} from './shield_entity.js'
 import {collision_system} from '../systems/collision_system.js'
 import {physics_system} from '../systems/physics_system.js'
 import {ai_system} from '../systems/ai_system.js'
@@ -23,10 +24,12 @@ export class World {
 	
 	var engine = new Engine(10, 0.01, 0.05, 0.01)
 	var player = new Ship(1, 100, 100, 0, 20, PLAYER_HEALTH, engine)
+	var shield = new Shield(player, 3, 100, 0.01, 10000)
 	var weapon1 = new Cannon(player, 1, 0.5, 0.05, 50, 5)
 	var weapon2 = new Cannon(player, 1, -0.5, -0.05, 50, 5)
 	player.weapons.push(weapon1, weapon2)
-	this.entities.push(player, engine, weapon1, weapon2)
+	player.shield = shield
+	this.entities.push(player, engine, shield, weapon1, weapon2)
 
 	this.ennemy_spawner = new EnnemySpawner(this, player, 20000)
 	this.camera = new Camera(0, 0, 1.5, player)
