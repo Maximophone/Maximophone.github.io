@@ -1,4 +1,5 @@
 import { Game } from './game.js'
+//import { gl } from "./graphics/gl.js"
 
 var c = document.getElementById("c");
 export var ctx = c.getContext("2d");
