@@ -42,10 +42,10 @@ class ShipPhysicsComponent extends PhysicsComponent {
 	    this.vx = cap_abs(this.vx - dt*engine.delta_v*cos, Math.abs(engine.max_v*cos))
 	    this.vy = cap_abs(this.vy - dt*engine.delta_v*sin, Math.abs(engine.max_v*sin))
 	}
-	if(engine.strafe_left){
+	if(engine.strafe_right){
 	    this.vx = cap_abs(this.vx + dt*engine.delta_v*cos_left, Math.abs(engine.max_v*cos_left))
 	    this.vy = cap_abs(this.vy + dt*engine.delta_v*sin_left, Math.abs(engine.max_v*sin_left))
-	} else if(engine.strafe_right){
+	} else if(engine.strafe_left){
 	    this.vx = cap_abs(this.vx + dt*engine.delta_v*cos_right, Math.abs(engine.max_v*cos_right))
 	    this.vy = cap_abs(this.vy + dt*engine.delta_v*sin_right, Math.abs(engine.max_v*sin_right))
 	}

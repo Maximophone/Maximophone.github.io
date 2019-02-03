@@ -6,6 +6,7 @@ export class Camera{
 	this.y = y
 	this.scale = scale
 	this.target = target
+	this.size = 1
     }
     update(dt){
 	
@@ -21,13 +22,13 @@ export class Camera{
 	else if (this.scale>this.target.size/20+epsilon){
 	    this.scale-=epsilon
 	}
-	//this.scale = this.target.size/20
-	this.x = this.target.position.x - c.width/2*this.scale
-	this.y = this.target.position.y - c.height/2*this.scale
+	this.size = this.target.position.size*this.scale
+	this.x = this.target.position.x// - c.width/2*this.scale
+	this.y = this.target.position.y// - c.height/2*this.scale
     }
     set_target(target){
 	this.target = target
     }
 }
 
-export var camera = new Camera(0, 0, 1.5, null)
+export var camera = new Camera(0, 0, 30, null)

@@ -1,4 +1,4 @@
-import {ctx} from './index.js'
+import { c } from "./index.js"
 import {camera} from './entities/camera.js'
 
 var _pressed_keys = []
@@ -17,14 +17,14 @@ export class UserInputs {
 	_pressed_keys[k.keyCode] = false
     }
     static move_mouse(e){
-	_mouse_target.x = e.offsetX
-	_mouse_target.y = e.offsetY // Negative because we invert the canvas y
+	_mouse_target.x = 2*e.offsetX/c.width - 1.
+	_mouse_target.y = -2*e.offsetY/c.height + 1.// Negative because we invert the canvas y
     }
     static get_mouse_target(with_camera=true){
 	if(with_camera){
 	    return {
-		x: _mouse_target.x*camera.scale + camera.x,
-		y: _mouse_target.y*camera.scale + camera.y
+		x: _mouse_target.x*camera.size + camera.x,
+		y: _mouse_target.y*camera.size + camera.y
 	    }
 	} else {
 	    return _mouse_target

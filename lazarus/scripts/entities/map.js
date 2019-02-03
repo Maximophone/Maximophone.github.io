@@ -6,7 +6,7 @@ export class Map {
 	// this.x = 0
 	// this.y = 0
 	// this.rot = 0
-	this.position = position_system.get_position(this, 0, 0)
+	this.position = position_system.get_position(this, 0, 0, 0, 100)
 	this.graphics_component = graphics_system.get_component("map", this)
     }
 }

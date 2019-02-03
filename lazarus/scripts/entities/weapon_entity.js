@@ -8,7 +8,7 @@ export class Weapon {
 	this.type = "weapon"
 	this.parent = ship
 	this.firing = false
-	this.position = position_system.get_position(this, x, y, rot)
+	this.position = position_system.get_position(this, x, y, rot, 0.25)
 	if(!ai){
 	    this.input_component = input_system.get_component("weapon", this)
 	}

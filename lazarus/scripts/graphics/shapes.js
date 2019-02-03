@@ -1,7 +1,7 @@
 var triangle_vertices = [
     0.0, 0.5,
     -0.5, -0.5,
-    0.5, -0.5
+    0.5, -0.5,
 ]
 
 var triangle_colors = [
@@ -11,10 +11,10 @@ var triangle_colors = [
 ]
 
 var rect_vertices = [
-    0.5, 0.5,
-    -0.5, 0.5,
-    -0.5, -0.5,
-    0.5, -0.5
+    1.0, 1.0,
+    -1.0, 1.0,
+    -1.0, -1.0,
+    1.0, -1.0,
 ]
 
 var rect_colors = [
@@ -25,7 +25,7 @@ var rect_colors = [
 ]
 
 var circle_vertices = []
-var circle_colors = [1.0, 1.0, 1.0]
+var circle_colors = [1.0, 0, 1.0]
 var circle_indices = []
 var center = [0.0, 0.0]
 circle_vertices.push(center[0])
@@ -46,7 +46,7 @@ for (var i = 0; i < n_points_circle; i++){
 export var circle_def = {
     data: {
 	vertPosition: circle_vertices,
-	vertColor: circle_colors
+	// vertColor: circle_colors
     },
     indices: circle_indices,
     n_vertices: n_points_circle + 1
@@ -56,7 +56,7 @@ export var circle_def = {
 export var triangle_def = {
     data: {
 	vertPosition: triangle_vertices,
-	vertColor: triangle_colors 
+	// vertColor: triangle_colors 
     },
     indices: [
 	0, 1, 2
@@ -67,7 +67,7 @@ export var triangle_def = {
 export var rect_def = {
     data: {
 	vertPosition: rect_vertices,
-	vertColor: rect_colors
+	// vertColor: rect_colors
     },
     indices: [
 	0, 1, 2,

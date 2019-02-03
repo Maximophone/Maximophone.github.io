@@ -5,6 +5,7 @@ import { graphics_system } from '../systems/graphics_system.js'
 export class Shield {
     constructor(ship, size, health, regen_rate=0, downtime=1000){
 	this.parent = ship
+	this.type = "shield"
 	this.id = ship.id
 	this.health = health
 	this.max_health = health

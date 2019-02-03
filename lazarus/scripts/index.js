@@ -1,11 +1,11 @@
 import { Game } from './game.js'
-//import { gl } from "./graphics/gl.js"
+import { gl } from "./graphics/gl.js"
 
-var c = document.getElementById("c");
+export var c = document.getElementById("c");
 export var ctx = c.getContext("2d");
 // ctx.transform(1, 0, 0, -1, 0, c.height)
-ctx.lineWidth = 0.2;
-ctx.strokeStyle = "#ffffff"
+// ctx.lineWidth = 0.2;
+// ctx.strokeStyle = "#ffffff"
 // ctx.globalCompositeOperation = 'multiply'
 
 var game = new Game(ctx)
