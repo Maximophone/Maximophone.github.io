@@ -27,7 +27,6 @@ export class Ship {
 	}
 	this.graphics_component = graphics_system.get_component("ship", this)
 	this.collider_component = collision_system.get_component("circle", this)
-	// this.input_component = input_system.get_component("ship", this)
     }
     spawn_loot(world){
 	var n_loot = 5

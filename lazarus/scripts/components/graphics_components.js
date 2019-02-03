@@ -7,6 +7,18 @@ class GraphicsComponent {
 	this.unbound = false
 	this.transparent = false
     }
+    get_graphics(){
+	return this.graphics
+    }
+    is_transparent(){
+	return this.transparent
+    }
+    get_time(){
+	return new Date().getTime()/1000.
+    }
+    blink(frequency){
+	return this.get_time()%frequency < frequency/2.
+    }
 }
 
 class MapGraphicsComponent extends GraphicsComponent{
@@ -69,8 +81,9 @@ class MapGraphicsComponent extends GraphicsComponent{
 
 class ShipGraphicsComponent extends GraphicsComponent {
     draw(){
+	var injured_display = ((this.entity.health<=30)&(this.blink(0.5)))
 	var params = {
-	    fillColor: "#aa5500"
+	    fillColor: injured_display?"#aa1100":"#b322fd" 
 	}
 	this.graphics.draw("circle", params)
     }
@@ -165,7 +178,7 @@ class ShieldGraphicsComponent extends GraphicsComponent {
 	if(this.entity.health > 0){
 	    var params = {
 		fillColor: "#bbbbff",
-		alpha: 0.2
+		alpha: 0.2*this.entity.health/this.entity.max_health+0.1
 	    }
 	    this.graphics.draw("circle", params)
 	}
@@ -202,6 +215,12 @@ class PointerGraphicsComponent extends GraphicsComponent {
 
 
 class StaticGraphicsComponent {
+    static get_graphics(){
+	return graphics
+    }
+    static is_transparent(){
+	return false
+    }
 }
 
 // class StaticGraphicsComponent {
@@ -228,6 +247,9 @@ class FadingParticleGraphicsComponent extends StaticGraphicsComponent {
 	    alpha: 0.5
 	}
 	graphics.draw("circle", params)
+    }
+    static is_transparent(){
+	return true
     }
 }
 

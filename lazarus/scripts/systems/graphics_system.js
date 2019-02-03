@@ -73,74 +73,57 @@ class GraphicsSystem extends System {
     // 	ctx.transform(camera.scale, 0, 0, camera.scale, 0, 0)
     // }
     draw_component(entity, component){
-	var curr_graphics = null
-	if(component.graphics){
-	    curr_graphics = component.graphics    
-	} else {
-	    curr_graphics = graphics
-	}
+	var curr_graphics = component.get_graphics()
 	gl.useProgram(curr_graphics.program)
 
-	if(!component.unbound){
-	    var parents_chain = [entity]
-	    var z = 0
-	    if(entity.type == "loot"){
-		z = 0
-	    } else if (entity.type == "ship"){
-		z = 0
-	    }
-	    while(entity.parent){
-		entity = entity.parent
-		parents_chain.push(entity)
-	    }
-	    set_identity(this.buffer_mat)
-	    for(var entity of parents_chain){
-		var size = entity.position.size || 1
-		scale_mat(this.buffer_mat, this.output_mat, size, size)
-		rotate_mat(this.output_mat, this.buffer_mat, entity.position.rot)
-		translate_mat(this.buffer_mat, this.output_mat, entity.position.x, entity.position.y, z)
-		mat4.copy(this.buffer_mat, this.output_mat)
-	    }
-	// var viewMat = new Float32Array(
-	//     [1, 0, 0, 0,
-	//      0, 1, 0, 0,
-	//      0, 0, 1, 0,
-	//      -0.25, 0, 0, 1]
-	// )
-	// var worldMat = new Float32Array(
-	//     [1, 0, 0, 0,
-	//      0, 1, 0, 0,
-	//      0, 0, 1, 0,
-	//      0.5, 0, 0, 1]
-	// )
-	    curr_graphics.uniforms.worldMat.set(this.output_mat)
-	    set_identity(this.output_mat)
-	    translate_mat(this.output_mat, this.buffer_mat, -camera.x, -camera.y, 0)
-	    scale_mat(this.buffer_mat, this.output_mat, 1/camera.size, 1/camera.size)
-	    curr_graphics.uniforms.viewMat.set(this.output_mat)
-	} else {
+	if(component.unbound){
 	    set_identity(this.output_mat)
 	    curr_graphics.uniforms.worldMat.set(this.output_mat)
 	    curr_graphics.uniforms.viewMat.set(this.output_mat)
+	    component.draw()
+	    return
 	}
+	var parents_chain = [entity]
+	var z = 0
+	if(entity.type == "loot"){
+	    z = 0
+	} else if (entity.type == "ship"){
+	    z = 0
+	}
+	while(entity.parent){
+	    entity = entity.parent
+	    parents_chain.push(entity)
+	}
+	set_identity(this.buffer_mat)
+	for(var entity of parents_chain){
+	    var size = entity.position.size || 1
+	    scale_mat(this.buffer_mat, this.output_mat, size, size)
+	    rotate_mat(this.output_mat, this.buffer_mat, entity.position.rot)
+	    translate_mat(this.buffer_mat, this.output_mat, entity.position.x, entity.position.y, z)
+	    mat4.copy(this.buffer_mat, this.output_mat)
+	}
+
+	curr_graphics.uniforms.worldMat.set(this.output_mat)
+	set_identity(this.output_mat)
+	translate_mat(this.output_mat, this.buffer_mat, -camera.x, -camera.y, 0)
+	scale_mat(this.buffer_mat, this.output_mat, 1/camera.size, 1/camera.size)
+	curr_graphics.uniforms.viewMat.set(this.output_mat)
+
 	component.draw()
     }
     draw(ctx){
 	this.garbage_collect(this.components)
-	// ctx.clearRect(0, 0, c.width, c.height)
-	//gl.clearColor(0., 0., 0., 1.0)
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 	gl.disable(gl.BLEND)
 	var i = 0
 	var transparent_components = []
 	for(var component of this.components){
-	    if(component.transparent){
+	    if(component.is_transparent()){
 		transparent_components.push(component)
 	    }
 	    else {
 		this.draw_component(component.entity, component)
 	    }
-	    //gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 	}
 	gl.enable(gl.BLEND)
 	for(var component of transparent_components){
