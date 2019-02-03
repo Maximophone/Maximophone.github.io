@@ -33,7 +33,7 @@ export class Ship {
 	var n_loot = 5
 	var v_loot = 0.5
 	for(var i = 0; i<n_loot; i++){
-	    world.entities.push(new Loot(this.position.x, this.position.y, Math.random()*2*Math.PI, v_loot))
+	    world.entities.push(new Loot(this.position.x, this.position.y, Math.random()*2*Math.PI, v_loot, (Math.random()*2 - 1.)*0.1))
 	}
     }
     update(world, dt){

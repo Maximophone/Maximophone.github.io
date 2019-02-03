@@ -22,7 +22,7 @@ varying vec4 expPosition;
 float flare(vec2 U){
     vec2 A = sin(vec2(0, 1.57));
     U = abs( U * mat2(A, -A.y, A.x)) * mat2(2, 0, 1, 1.7);
-    return .02/max(U.x, U.y);
+    return .01/max(U.x, U.y);
     // return .5*pow(max(U.x, U.y), -0.9);
 }
 
@@ -44,7 +44,7 @@ void mainImage( out vec4 O, vec2 U )
         if(max(buffer.x, buffer.y) > 0.2) continue; // For performance, discard
         O += flare (U - sr2(i)*R/R.y )           // rotating flare at random location
               * r(i+.2)                          // random scale
-              * (1.+.5*sin(r(i+.3)*3.*u_time))  // time pulse
+              * (1.+.5*sin(r(i+.3)*4.*u_time))  // time pulse
             //* (1.+.1*sr3(i+.4));               // random color - uncorrelated
               * (1.+.1*sr3(i));                  // random color - correlated
     }

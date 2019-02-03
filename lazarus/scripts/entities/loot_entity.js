@@ -4,7 +4,7 @@ import { collision_system } from '../systems/collision_system.js'
 import { position_system } from '../systems/position_system.js'
 
 export class Loot {
-    constructor(x, y, rot, v, size=8){
+    constructor(x, y, rot, v, v_rot, size=12){
 	this.type = "loot"
 	this.lifetime = 1000000+Math.random()*50000
 
@@ -14,6 +14,7 @@ export class Loot {
 	this.physics_component = physics_system.get_component("bullet", this)
 	this.physics_component.vx = v*Math.cos(rot)
 	this.physics_component.vy = v*Math.sin(rot)
+	this.physics_component.v_rot = v_rot
     }
     update(world, dt){
 	this.lifetime -= dt

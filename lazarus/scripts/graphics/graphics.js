@@ -21,55 +21,44 @@ class Graphics{
 	    rect: new Shape(rect_def),
 	    triangle: new Shape(triangle_def)
 	}
-
 	this.uniforms = {
 	    worldMat: new Uniform(this.program, "worldMat", "mat4"),
 	    viewMat: new Uniform(this.program, "viewMat", "mat4"),
 	    color: new Uniform(this.program, "color", "vec4"),
 	    time: new Uniform(this.program, "u_time", "float")
 	}
-	this.fillColor = "#ffffff"
-	this.alpha = 1.0
+	this.params = {
+	    fillColor: "#ffffff",
+	    alpha: 1.0
+	}
 	this.color_vec4 = new Float32Array(4)
 	gl.useProgram(this.program)
     }
-    draw(model){
+    draw(model, params){
+	if(!params){
+	    params = this.params
+	} else {
+	    for(var key in this.params){
+		if(!(key in params)){
+		    params[key] = this.params[key]
+		}
+	    }
+	}
 	gl.useProgram(this.program)
-	this.set_color_uniform()
+	this.set_color_uniform(params)
 	this.set_time()
 	this.models[model].draw(this.program)
     }
-    set_color_uniform(){
+    set_color_uniform(params){
 	gl.useProgram(this.program)
-	var color = hexToRGB(this.fillColor)
-	vec4.set(this.color_vec4, color.r/255, color.g/255, color.b/255, this.alpha)
+	var color = hexToRGB(params.fillColor)
+	vec4.set(this.color_vec4, color.r/255, color.g/255, color.b/255, params.alpha)
 	this.uniforms.color.set(this.color_vec4)
     }
     set_time(){
 	gl.useProgram(this.program)
 	this.uniforms.time.set(((new Date().getTime())%1e7)*0.001)
     }
-	
-    // circle(){
-    // 	gl.useProgram(this.program)
-    // 	this.set_color_uniform()
-    // 	this.shapes.circle.draw(this.program)
-    // }
-    // rect(){
-    // 	gl.useProgram(this.program)
-    // 	this.set_color_uniform()
-    // 	this.shapes.rect.draw(this.program)
-    // }
-    // triangle(){
-    // 	gl.useProgram(this.program)
-    // 	this.set_color_uniform()
-    // 	this.shapes.triangle.draw(this.program)
-    // }
-    // model(model_name){
-    // 	gl.useProgram(this.program)
-    // 	this.set_color_uniform()
-    // 	this.models[model_name].draw(this.program)
-    // }
 }
 
 export var graphics = new Graphics(programs.default)

@@ -84,7 +84,9 @@ class GraphicsSystem extends System {
 	if(!component.unbound){
 	    var parents_chain = [entity]
 	    var z = 0
-	    if(entity.type == "shield"){
+	    if(entity.type == "loot"){
+		z = 0
+	    } else if (entity.type == "ship"){
 		z = 0
 	    }
 	    while(entity.parent){

@@ -7,16 +7,6 @@ class GraphicsComponent {
 	this.unbound = false
 	this.transparent = false
     }
-    save_style(){
-	this.style_buffer = {
-	    fillColor: this.graphics.fillColor,
-	    alpha: this.graphics.alpha
-	}
-    }
-    load_style(){
-	this.graphics.fillColor = this.style_buffer.fillColor
-	this.graphics.alpha = this.style_buffer.alpha
-    }
 }
 
 class MapGraphicsComponent extends GraphicsComponent{
@@ -79,10 +69,10 @@ class MapGraphicsComponent extends GraphicsComponent{
 
 class ShipGraphicsComponent extends GraphicsComponent {
     draw(){
-	this.save_style()
-	this.graphics.fillColor = "#aa5500"
-	this.graphics.draw("circle")
-	this.load_style()
+	var params = {
+	    fillColor: "#aa5500"
+	}
+	this.graphics.draw("circle", params)
     }
 }
 
@@ -106,7 +96,7 @@ class ShipGraphicsComponent extends GraphicsComponent {
 
 class BulletGraphicsComponent extends GraphicsComponent {
     draw(){
-	this.graphics.draw("circle")
+	this.graphics.draw("circle", {fillColor: "#ffffaa"})
     }
 }
 
@@ -126,10 +116,11 @@ class BulletGraphicsComponent extends GraphicsComponent {
 
 class LootGraphicsComponent extends GraphicsComponent {
     draw(){
-	this.save_style()
 	this.graphics.fillColor = "#ffffff"
-	this.graphics.draw("triangle")
-	this.load_style()
+	var params = {
+	    fillColor: "#ffaaaa"
+	}
+	this.graphics.draw("triangle", params)
     }
 }
 
@@ -148,10 +139,10 @@ class LootGraphicsComponent extends GraphicsComponent {
 
 class WeaponGraphicsComponent extends GraphicsComponent {
     draw(){
-	this.save_style()
-	this.graphics.fillColor = "#ffffff"
-	this.graphics.draw("rect")
-	this.load_style()
+	var params = {
+	    fillColor: "#dddddd"
+	}
+	this.graphics.draw("rect", params)
     }
 }
 
@@ -172,11 +163,11 @@ class ShieldGraphicsComponent extends GraphicsComponent {
     }
     draw(){
 	if(this.entity.health > 0){
-	    this.save_style()
-	    this.graphics.fillColor = "#bbbbff"
-	    this.graphics.alpha = 0.2
-	    this.graphics.draw("circle")
-	    this.load_style()
+	    var params = {
+		fillColor: "#bbbbff",
+		alpha: 0.2
+	    }
+	    this.graphics.draw("circle", params)
 	}
     }
 }
@@ -211,16 +202,6 @@ class PointerGraphicsComponent extends GraphicsComponent {
 
 
 class StaticGraphicsComponent {
-    static save_style(){
-	this.style_buffer = {
-	    fillColor: graphics.fillColor,
-	    alpha: graphics.alpha
-	}
-    }
-    static load_style(){
-	graphics.fillColor = this.style_buffer.fillColor
-	graphics.alpha = this.style_buffer.alpha
-    }
 }
 
 // class StaticGraphicsComponent {
@@ -242,11 +223,11 @@ class StaticGraphicsComponent {
 
 class FadingParticleGraphicsComponent extends StaticGraphicsComponent {
     static draw(){
-	this.save_style()
-	graphics.fillColor = "#ffffcc"
-	graphics.alpha = 0.5
-	graphics.draw("circle")
-	this.load_style()
+	var params = {
+	    fillColor: "#ffffcc",
+	    alpha: 0.5
+	}
+	graphics.draw("circle", params)
     }
 }
 
