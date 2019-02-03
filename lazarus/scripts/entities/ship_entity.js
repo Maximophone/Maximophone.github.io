@@ -13,6 +13,7 @@ export class Ship {
 	this.type = "ship"
 	this.id = id
 	this.health = health
+	this.max_health = health
 	this.lifetime = 1
 	this.weapons = weapons
 	this.engine = engine

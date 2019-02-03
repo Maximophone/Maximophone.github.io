@@ -64,6 +64,8 @@ void main(){
 }
 `
 
+
+
 export var fragment_shaders = {
     default: createShader(gl, fragment_shader, gl.FRAGMENT_SHADER),
     map: createShader(gl, shader_map, gl.FRAGMENT_SHADER)

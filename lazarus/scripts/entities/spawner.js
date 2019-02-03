@@ -2,7 +2,7 @@ import { Engine } from './engine_entity.js'
 import { Ship } from './ship_entity.js'
 import { Cannon } from './weapon_entity.js'
 
-var ENNEMY_HEALTH = 50
+var ENNEMY_HEALTH = 20
 var SPAWN_DIST = 800
 
 export class EnnemySpawner {

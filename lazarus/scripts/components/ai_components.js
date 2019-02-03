@@ -12,7 +12,7 @@ class ShipAIComponent extends AIComponent {
 	this.target = target
     }
     update(){
-	var SPEED = 0.5
+	var SPEED = 2.5
 	var TURN_RATE = 0.04
 	var pos = this.entity.position
 	var target_pos = this.target.position

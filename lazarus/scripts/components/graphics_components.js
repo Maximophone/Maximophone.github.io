@@ -81,7 +81,7 @@ class MapGraphicsComponent extends GraphicsComponent{
 
 class ShipGraphicsComponent extends GraphicsComponent {
     draw(){
-	var injured_display = ((this.entity.health<=30)&(this.blink(0.5)))
+	var injured_display = ((this.entity.health<=0.1*this.entity.max_health)&(this.blink(0.5)))
 	var params = {
 	    fillColor: injured_display?"#aa1100":"#b322fd" 
 	}
@@ -177,7 +177,7 @@ class ShieldGraphicsComponent extends GraphicsComponent {
     draw(){
 	if(this.entity.health > 0){
 	    var params = {
-		fillColor: "#bbbbff",
+		fillColor: "#0000ff",
 		alpha: 0.2*this.entity.health/this.entity.max_health+0.1
 	    }
 	    this.graphics.draw("circle", params)
