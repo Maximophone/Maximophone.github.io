@@ -148,7 +148,7 @@ export function createProgram(gl, vertex_shader, fragment_shader, debug=true){
     gl.linkProgram(program)
     console.log("program linked")
     if(!gl.getProgramParameter(program, gl.LINK_STATUS)){
-	console.error("Error linking program ", gl.getProgamInfoLog(program))
+	console.error("Error linking program ", gl.getProgramInfoLog(program))
 	return
     }
     if(debug){

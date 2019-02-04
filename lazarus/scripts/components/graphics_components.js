@@ -1,4 +1,4 @@
-import { graphics, graphics_map } from "../graphics/graphics.js"
+import { graphics, graphics_map, graphics_light } from "../graphics/graphics.js"
 
 class GraphicsComponent {
     constructor(entity){
@@ -83,7 +83,7 @@ class ShipGraphicsComponent extends GraphicsComponent {
     draw(){
 	var injured_display = ((this.entity.health<=0.1*this.entity.max_health)&(this.blink(0.5)))
 	var params = {
-	    fillColor: injured_display?"#aa1100":"#b322fd" 
+	    fillColor: injured_display?"#aa1100":"#b322fd"
 	}
 	this.graphics.draw("circle", params)
     }
@@ -112,7 +112,6 @@ class BulletGraphicsComponent extends GraphicsComponent {
 	this.graphics.draw("circle", {fillColor: "#ffffaa"})
     }
 }
-
 
 // class BulletGraphicsComponent extends GraphicsComponent {
 //     draw(ctx){
@@ -266,13 +265,36 @@ class FadingParticleGraphicsComponent extends StaticGraphicsComponent {
 //     }
 // }
 
+class DebugStatic extends StaticGraphicsComponent {
+    static draw(){
+	graphics_light.draw("large_rect", {fillColor: "ffffcc"})
+    }
+    static is_transparent(){
+	return true
+    }
+    static get_graphics(){
+	return graphics_light
+    }
+}
+	
+class Debug extends GraphicsComponent {
+    constructor(entity){
+	super(entity)
+	this.transparent = true
+	this.graphics = graphics_light
+    }
+    draw(){
+	this.graphics.draw("large_rect", {fillColor: "#ff8866"})
+    }
+}
+
 export var graphics_components = {
     ship: ShipGraphicsComponent,
     loot: LootGraphicsComponent,
-    bullet: BulletGraphicsComponent,
+    bullet: Debug,
     weapon: WeaponGraphicsComponent,
     map: MapGraphicsComponent,
     shield: ShieldGraphicsComponent,
     pointer: PointerGraphicsComponent,
-    fading_particle: FadingParticleGraphicsComponent
+    fading_particle: DebugStatic
 }

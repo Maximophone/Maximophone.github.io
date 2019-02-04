@@ -11,6 +11,12 @@ var rect_vertices = [
     1.0, -1.0,
 ]
 
+var large_rect_vertices = [
+    20., 20.,
+    -20., 20.,
+    -20., -20.,
+    20., -20.
+]
 
 var circle_vertices = []
 var circle_indices = []
@@ -49,6 +55,17 @@ export var triangle_def = {
 export var rect_def = {
     data: {
 	vertPosition: rect_vertices,
+    },
+    indices: [
+	0, 1, 2,
+	0, 2, 3
+    ],
+    n_vertices: 4
+}
+
+export var large_rect_def = {
+    data: {
+	vertPosition: large_rect_vertices,
     },
     indices: [
 	0, 1, 2,

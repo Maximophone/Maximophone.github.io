@@ -9,10 +9,14 @@ uniform mat4 worldMat;
 uniform mat4 viewMat;
 
 varying vec4 worldPosition;
+varying vec4 viewPosition;
+varying vec2 vertPos;
 
 void main(){
+    vertPos = vertPosition;
     worldPosition = worldMat * vec4(vertPosition, 0., 1.);
-    gl_Position = viewMat * worldPosition;
+    viewPosition = viewMat * worldPosition;
+    gl_Position = viewPosition;
 }
 `
 
