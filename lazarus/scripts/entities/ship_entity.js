@@ -51,8 +51,8 @@ export class Ship {
 		    }
 		    break
 		case "loot":
-		    this.position.size *= 1.01
-		    this.health *= 1.01
+		    this.position.size *= 1.001
+		    this.health *= 1.001
 		    collider.entity.lifetime = -1
 		}
 	    }
