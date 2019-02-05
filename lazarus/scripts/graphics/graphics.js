@@ -65,3 +65,4 @@ class Graphics{
 export var graphics = new Graphics(programs.default)
 export var graphics_map = new Graphics(programs.map)
 export var graphics_light = new Graphics(programs.light)
+export var graphics_react = new Graphics(programs.react)

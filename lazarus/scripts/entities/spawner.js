@@ -18,8 +18,10 @@ export class EnnemySpawner {
 	    var angle = Math.random()*Math.PI*2
 	    var x = this.player.position.x + SPAWN_DIST*Math.cos(angle)
 	    var y = this.player.position.y + SPAWN_DIST*Math.sin(angle)
-	    var engine = new Engine(10, 0.01, 0.05, true)
-	    var ai = new Ship(2, x, y, 0, 17, ENNEMY_HEALTH, engine, [], true, this.player)
+	    
+	    var ai = new Ship(2, x, y, 0, 17, ENNEMY_HEALTH, null, [], true, this.player)
+	    var engine = new Engine(ai, 10, 0.01, 0.05, true)
+	    ai.engine = engine
 	    var cannon = new Cannon(ai, 1, 0, 0, 200, 5, true)
 	    ai.weapons.push(cannon)
 	    this.world.entities.push(ai, engine, cannon)
