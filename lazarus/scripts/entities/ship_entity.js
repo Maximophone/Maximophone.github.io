@@ -70,7 +70,7 @@ export class Ship {
 		this.position.y,
 		0,
 		0,
-		200,
+		100,
 		25
 	    )
 	    particles_pool.create(
@@ -80,7 +80,7 @@ export class Ship {
 		this.position.y,
 		0,
 		0,
-		75,
+		50,
 		50
 	    )
 	    this.spawn_loot(world)

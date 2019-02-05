@@ -46,18 +46,8 @@ export class Bullet {
 	    this.position.y,
 	    0,
 	    0,
-	    50,
-	    25
-	)
-	particles_pool.create(
-	    graphics_components.fading_particle,
-	    "fading_particle",
-	    this.position.x,
-	    this.position.y,
-	    0,
-	    0,
 	    20,
-	    50
+	    20
 	)
 	particles_pool.create(
 	    graphics_components.fading_particle,
@@ -67,6 +57,16 @@ export class Bullet {
 	    0,
 	    0,
 	    10,
+	    50
+	)
+	particles_pool.create(
+	    graphics_components.fading_particle,
+	    "fading_particle",
+	    this.position.x,
+	    this.position.y,
+	    0,
+	    0,
+	    5,
 	    50
 	)
     }

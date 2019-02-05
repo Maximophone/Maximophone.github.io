@@ -7,7 +7,8 @@ varying vec2 vertPos;
 
 float light(vec2 U){
   float r = sqrt(dot(U, U));
-  return .2*pow(r, -1.5);
+  //return .2*pow(r, -1.5);
+  return exp(-.2*(r));
 }
 
 void main(){
