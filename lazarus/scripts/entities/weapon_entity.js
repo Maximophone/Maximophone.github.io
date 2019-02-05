@@ -2,13 +2,14 @@ import { input_system } from '../systems/input_system.js'
 import { graphics_system } from '../systems/graphics_system.js'
 import { position_system } from '../systems/position_system.js'
 import { Bullet } from './bullet_entity.js'
+import { Missile } from './missile.js'
 
 export class Weapon {
     constructor(ship, x, y, rot, ai=false){
 	this.type = "weapon"
 	this.parent = ship
 	this.firing = false
-	this.position = position_system.get_position(this, x, y, rot, 0.25)
+	this.position = position_system.get_position(this, x, y, rot, 0.20)
 	if(!ai){
 	    this.input_component = input_system.get_component("weapon", this)
 	}
@@ -32,6 +33,7 @@ export class Cannon extends Weapon {
 		    this.parent.position.y-this.parent.position.size*this.position.x*Math.sin(-this.parent.position.rot)+this.parent.position.size*this.position.y*Math.cos(-this.parent.position.rot),
 		    this.parent.position.rot+this.position.rot, 
 		    this.parent.physics_component.v()+this.bullet_speed)
+		    
 		world.entities.push(projectile)
 		this.timer = this.firing_rate + this.timer
 	    } else {
@@ -40,3 +42,31 @@ export class Cannon extends Weapon {
 	}
     }
 }
+
+export class MissileLauncher extends Weapon {
+    constructor(ship, x, y, rot, firing_rate, missile_speed){
+	super(ship, x, y, rot)
+	this.firing_rate = firing_rate
+	this.missile_speed = missile_speed
+	this.timer = 0
+    }
+    update(world, dt){
+	if(this.firing){
+	    if(this.timer <= 0){
+		var projectile = new Missile(
+		    world,
+		    this.parent.id,
+		    this.parent.position.x+this.parent.position.size*this.position.x*Math.cos(-this.parent.position.rot)+this.parent.position.size*this.position.y*Math.sin(-this.parent.position.rot), 
+		    this.parent.position.y-this.parent.position.size*this.position.x*Math.sin(-this.parent.position.rot)+this.parent.position.size*this.position.y*Math.cos(-this.parent.position.rot),
+		    this.parent.position.rot+this.position.rot, 
+		    this.parent.physics_component.v()+this.missile_speed)
+		    
+		world.entities.push(projectile)
+		this.timer = this.firing_rate + this.timer
+	    } else {
+		this.timer -= dt
+	    }
+	}
+    }
+}
+		

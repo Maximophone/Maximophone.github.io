@@ -32,8 +32,6 @@ class MapGraphicsComponent extends GraphicsComponent{
 }
 
 
-
-
 class ShipGraphicsComponent extends GraphicsComponent {
     draw(){
 	var injured_display = ((this.entity.health<=0.1*this.entity.max_health)&(this.blink(0.5)))
@@ -62,6 +60,23 @@ class EngineGraphicsComponent extends GraphicsComponent {
 class BulletGraphicsComponent extends GraphicsComponent {
     draw(){
 	this.graphics.draw("circle", {fillColor: "#ffffaa"})
+    }
+}
+
+class MissileGraphicsComponent extends GraphicsComponent {
+    draw(){
+	this.graphics.draw("circle", {fillColor:"#ffffaa"})
+    }
+}
+
+class ExplosionGraphicsComponent extends GraphicsComponent {
+    constructor(entity){
+	super(entity)
+	this.transparent = true
+	this.graphics = graphics_light
+    }
+    draw(){
+	this.graphics.draw("large_rect")
     }
 }
 
@@ -165,6 +180,8 @@ export var graphics_components = {
     engine: EngineGraphicsComponent,
     loot: LootGraphicsComponent,
     bullet: Debug,
+    missile: MissileGraphicsComponent,
+    explosion: ExplosionGraphicsComponent,
     weapon: WeaponGraphicsComponent,
     map: MapGraphicsComponent,
     shield: ShieldGraphicsComponent,

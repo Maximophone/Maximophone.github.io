@@ -1,6 +1,6 @@
 import {Ship} from './ship_entity.js'
 import {Engine} from './engine_entity.js'
-import {Cannon} from './weapon_entity.js'
+import {Cannon, MissileLauncher} from './weapon_entity.js'
 import {Shield} from './shield_entity.js'
 import {collision_system} from '../systems/collision_system.js'
 import {physics_system} from '../systems/physics_system.js'
@@ -28,10 +28,11 @@ export class World {
 	player.engine = engine
 	var weapon1 = new Cannon(player, 1, 0.5, 0.05, 50, 15)
 	var weapon2 = new Cannon(player, 1, -0.5, -0.05, 50, 15)
+	var weapon3 = new MissileLauncher(player, 1, 0., 0., 500, 5)
 	var shield = new Shield(player, 3, 100, 0.01, 10000)
-	player.weapons.push(weapon1, weapon2)
+	player.weapons.push(weapon1, weapon2, weapon3)
 	player.shield = shield
-	this.entities.push(player, engine, shield, weapon1, weapon2)
+	this.entities.push(player, engine, shield, weapon1, weapon2, weapon3)
 
 	this.ennemy_spawner = new EnnemySpawner(this, player, 20000)
 	this.mouse_pointer = new MousePointer(this.camera)
