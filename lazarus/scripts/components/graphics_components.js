@@ -65,7 +65,7 @@ class BulletGraphicsComponent extends GraphicsComponent {
 
 class MissileGraphicsComponent extends GraphicsComponent {
     draw(){
-	this.graphics.draw("circle", {fillColor:"#ffffaa"})
+	this.graphics.draw("missile", {fillColor:"#ffffaa"})
     }
 }
 

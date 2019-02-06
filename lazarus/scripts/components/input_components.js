@@ -76,6 +76,16 @@ export class PlayerInputWeaponComponent extends InputComponent {
     }
 }
 
+export class PlayerInputWeaponSecondaryComponent extends InputComponent {
+    update(){
+	if(UserInputs.pressed_key(GameKeys.FIRE_2)){
+	    this.entity.firing = true
+	} else {
+	    this.entity.firing = false
+	}
+    }
+}
+
 export class PlayerInputDebugComponent extends InputComponent {
     update(){
 	if(UserInputs.pressed_key(KeyCodes.LEFT)){
@@ -91,6 +101,7 @@ export var input_components = {
     ai: AIInputComponent,
     engine: PlayerInputEngineComponent,
     weapon: PlayerInputWeaponComponent,
+    weapon_secondary: PlayerInputWeaponSecondaryComponent,
     ship: PlayerInputShipComponent,
     mouse: MouseInputComponent,
     debug: PlayerInputDebugComponent

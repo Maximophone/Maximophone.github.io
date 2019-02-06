@@ -18,6 +18,20 @@ var large_rect_vertices = [
     20., -20.
 ]
 
+var missile_vertices = [
+    -1., -0.4,
+    0.5, -0.4,
+    1., 0.,
+    0.5, 0.4,
+    -1., 0.4
+]
+
+var missile_indices = [
+    0, 1, 3,
+    0, 3, 4,
+    1, 2, 3
+]
+
 var circle_vertices = []
 var circle_indices = []
 var center = [0.0, 0.0]
@@ -72,4 +86,12 @@ export var large_rect_def = {
 	0, 2, 3
     ],
     n_vertices: 4
+}
+
+export var missile_def = {
+    data: {
+	vertPosition: missile_vertices,
+    },
+    indices: missile_indices,
+    n_vertices: 5
 }

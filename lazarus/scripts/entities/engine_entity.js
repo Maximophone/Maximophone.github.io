@@ -9,6 +9,7 @@ export class Engine {
 	this.max_v = max_v
 	this.delta_v = delta_v
 	this.delta_rot = delta_rot
+	this.lifetime = 1
 	this.accelerate = false
 	this.deccelerate = false
 	this.target_angle = 0
@@ -19,5 +20,8 @@ export class Engine {
 	this.position = position_system.get_position(this, -1, 0, 0., 15);
     }
     update(world, dt){
+	if(this.parent.lifetime < 0){
+	    this.lifetime = -1
+	}
     }
 }

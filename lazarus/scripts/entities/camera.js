@@ -31,4 +31,4 @@ export class Camera{
     }
 }
 
-export var camera = new Camera(0, 0, 30, null)
+export var camera = new Camera(0, 0, 50, null)

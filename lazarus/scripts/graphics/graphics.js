@@ -1,4 +1,4 @@
-import {circle_def, rect_def, triangle_def, large_rect_def} from "./shapes.js"
+import {circle_def, rect_def, triangle_def, large_rect_def, missile_def} from "./shapes.js"
 import {Shape} from "./webgl_utils.js"
 import {gl} from "./gl.js"
 import {Uniform} from "./webgl_utils.js"
@@ -20,7 +20,8 @@ class Graphics{
 	    circle: new Shape(circle_def),
 	    rect: new Shape(rect_def),
 	    triangle: new Shape(triangle_def),
-	    large_rect: new Shape(large_rect_def)
+	    large_rect: new Shape(large_rect_def),
+	    missile: new Shape(missile_def),
 	}
 	this.uniforms = {
 	    worldMat: new Uniform(this.program, "worldMat", "mat4"),

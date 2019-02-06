@@ -26,10 +26,10 @@ export class World {
 	var player = new Ship(1, 100, 100, 0, 20, PLAYER_HEALTH, null)
 	var engine = new Engine(player, 10, 0.01, 0.05)
 	player.engine = engine
-	var weapon1 = new Cannon(player, 1, 0.5, 0.05, 50, 15)
-	var weapon2 = new Cannon(player, 1, -0.5, -0.05, 50, 15)
-	var weapon3 = new MissileLauncher(player, 1, 0., 0., 500, 5)
-	var shield = new Shield(player, 3, 100, 0.01, 10000)
+	var weapon1 = new Cannon(player, 1, 0.5, 0.05, 100, 15)
+	var weapon2 = new Cannon(player, 1, -0.5, -0.05, 100, 15)
+	var weapon3 = new MissileLauncher(player, 1, 0., 0., 5000, 5)
+	var shield = new Shield(player, 3, 100, 0.01, 5000)
 	player.weapons.push(weapon1, weapon2, weapon3)
 	player.shield = shield
 	this.entities.push(player, engine, shield, weapon1, weapon2, weapon3)

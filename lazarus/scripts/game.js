@@ -6,6 +6,24 @@ var GameState = {
     GAME_MENU: 2
 }
 
+var last_dt = []
+
+function fps(dt){
+    var N = 100
+    last_dt.push(dt)
+    if(last_dt.length >= N){
+	var mean_dt = 0
+	for(var dt of last_dt){
+	    mean_dt += dt
+	}
+	mean_dt /= N
+	console.log("FPS: ",1000/dt)
+	last_dt = []
+    }
+}
+	
+    
+
 export class Game {
     constructor(context){
 	this.context = context
@@ -13,6 +31,7 @@ export class Game {
 	this.state = GameState.PLAY
     }
     update(dt){
+	fps(dt)
 	switch(this.state){
 	case GameState.MAIN_MENU:
 	case GameState.GAME_MENU:

@@ -42,6 +42,7 @@ export var KeyCodes = Object.freeze({
     A: 65,
     S: 83,
     D: 68,
+    E: 69,
     UP: 38,
     DOWN: 40,
     LEFT: 37,
@@ -50,6 +51,7 @@ export var KeyCodes = Object.freeze({
 
 export var GameKeys = Object.freeze({
     FIRE: KeyCodes.SPACE,
+    FIRE_2: KeyCodes.E,
     ACCELERATE: KeyCodes.W,
     DECCELERATE: KeyCodes.S,
     TURN_CW: KeyCodes.A,

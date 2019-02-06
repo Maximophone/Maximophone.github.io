@@ -6,6 +6,7 @@ import { position_system } from '../systems/position_system.js'
 export class Loot {
     constructor(x, y, rot, v, v_rot, size=12){
 	this.type = "loot"
+	this.id = 3
 	this.lifetime = 1000000+Math.random()*50000
 
 	this.position = position_system.get_position(this, x, y, rot, size)
