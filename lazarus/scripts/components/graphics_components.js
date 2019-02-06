@@ -1,4 +1,4 @@
-import { graphics, graphics_map, graphics_light, graphics_react } from "../graphics/graphics.js"
+import { graphics, graphics_map, graphics_light, graphics_react, graphics_explosion } from "../graphics/graphics.js"
 
 class GraphicsComponent {
     constructor(entity){
@@ -73,7 +73,7 @@ class ExplosionGraphicsComponent extends GraphicsComponent {
     constructor(entity){
 	super(entity)
 	this.transparent = true
-	this.graphics = graphics_light
+	this.graphics = graphics_explosion
     }
     draw(){
 	this.graphics.draw("large_rect")
