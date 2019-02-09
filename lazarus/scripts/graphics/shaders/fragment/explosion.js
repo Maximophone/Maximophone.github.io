@@ -49,14 +49,14 @@ float fbm( in vec2 p )
 float explosion(vec2 st, float scale){
   float r = sqrt(dot(scale*st, scale*st));
   float a = atan(scale*st.y, scale*st.x);
-  return fbm(vec2(r,sin(a*PI+u_time))*1.)*exp(-5.*(r-0.1));;
+  return fbm(vec2(r,sin(a*PI+u_time))*1.)*exp(-2.*(r-0.2));
 }
 
 void main(){
   vec2 st = vertPos/2.;
   float expl = explosion(st, .2);
-  vec3 col = expl*vec3(1.000,0.641,0.078);
+  vec3 col = expl*vec3(1.000,0.7,0.378);
   //col = vec3(vertPos.x, vertPos.y, 0.);
-  gl_FragColor = vec4(col, expl);
+  gl_FragColor = vec4(col, expl*0.9);
 }
 `

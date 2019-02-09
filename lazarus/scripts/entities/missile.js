@@ -52,13 +52,18 @@ export class Missile {
 }
 
 export class Explosion {
-    constructor(id, x, y, size=25, damage = 20){
+    constructor(id, x, y, size=200, damage = 20){
 	this.type="explosion"
 	this.id = id
 	this.lifetime = 1000
+	this.init_lifetime = this.lifetime
+	this.size_0 = size/20
+	this.size_1 = size
 	this.damage = damage
 	this.position = position_system.get_position(this, x, y, 0, size)
-	this.graphics_component = graphics_system.get_component("explosion", this)
+	this.grahics_component = graphics_system.get_component("explosion", this)
+	//this.graphics_component = graphics_system.get_component("light_circle", this)
+	this.debug_graphics = graphics_system.get_component("circle", this)
 	this.collider_component = collision_system.get_component("circle", this)
     }
     update(world, dt){
@@ -69,7 +74,9 @@ export class Explosion {
 		}
 	    }
 	}
-	this.position.size *= (1 + 0.002*dt)
+	var t = 1-this.lifetime/this.init_lifetime
+	t = t**5
+	this.position.size = t*this.size_1 + (1-t)*this.size_0
 	this.lifetime -= dt
     }
 }

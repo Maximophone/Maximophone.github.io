@@ -8,6 +8,7 @@ export class Loot {
 	this.type = "loot"
 	this.id = 3
 	this.lifetime = 1000000+Math.random()*50000
+	this.health = 1
 
 	this.position = position_system.get_position(this, x, y, rot, size)
 	this.graphics_component = graphics_system.get_component("loot", this)
@@ -19,5 +20,8 @@ export class Loot {
     }
     update(world, dt){
 	this.lifetime -= dt
+	if(this.health < 0){
+	    this.lifetime = -1
+	}
     }
 }

@@ -174,6 +174,22 @@ class Debug extends GraphicsComponent {
     }
 }
 
+class Circle extends GraphicsComponent {
+    draw(){
+	this.graphics.draw("circle")
+    }
+}
+
+class LightCircle extends GraphicsComponent {
+    constructor(entity){
+	super(entity)
+	this.transparent = true
+	this.graphics = graphics_light
+    }
+    draw(){
+	this.graphics.draw("large_rect")
+    }
+}	
 
 export var graphics_components = {
     ship: ShipGraphicsComponent,
@@ -186,5 +202,7 @@ export var graphics_components = {
     map: MapGraphicsComponent,
     shield: ShieldGraphicsComponent,
     pointer: PointerGraphicsComponent,
-    fading_particle: DebugStatic
+    fading_particle: DebugStatic,
+    circle: Circle,
+    light_circle: LightCircle
 }

@@ -22,7 +22,7 @@ export class EnnemySpawner {
 	    var ai = new Ship(2, x, y, 0, 17, ENNEMY_HEALTH, null, [], true, this.player)
 	    var engine = new Engine(ai, 10, 0.01, 0.05, true)
 	    ai.engine = engine
-	    var cannon = new Cannon(ai, 1, 0, 0, 200, 5, true)
+	    var cannon = new Cannon(ai, 1, 0, 0, 200, 10, true)
 	    ai.weapons.push(cannon)
 	    this.world.entities.push(ai, engine, cannon)
 	}
