@@ -1,9 +1,14 @@
 import { Game } from './game.js'
 import { gl } from "./graphics/gl.js"
 
+var user_id = "user_" + String(Math.round(Math.random()*100))
+
 export var socket = io.connect("http://"+document.domain+":"+location.port)
 socket.on("connect", function(){
-    socket.emit("connection", {data: "connected"})
+    socket.emit("connection", {data: "connected", user_id: user_id})
+})
+socket.on("ping", function(){
+    console.log("pingged!")
 })
 
 export var c = document.getElementById("c");
@@ -15,7 +20,7 @@ function loop(timestamp) {
     var dt = timestamp - lastRender;
 
     game.update(dt);
-    game.draw();
+    //game.draw();
 
     lastRender = timestamp;
     window.requestAnimationFrame(loop);
