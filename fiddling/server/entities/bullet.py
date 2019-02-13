@@ -1,6 +1,7 @@
 from .entity import Entity
 from server.systems import physics_system, collision_system, position_system, particles_pool
 
+import math
 
 class Bullet(Entity):
     def __init__(self, id, x, y, rot, v, size=2, damage=10):

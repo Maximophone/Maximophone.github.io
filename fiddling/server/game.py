@@ -13,7 +13,7 @@ def fps(dt):
     last_dt.append(dt)
     if len(last_dt) >= N:
         mean_dt = np.mean(last_dt)
-        # print(f"FPS: {1./mean_dt:.0f}")
+        # print(f"FPS: {1000./mean_dt:.0f}")
         del last_dt[:]
 
 
@@ -32,7 +32,7 @@ class Gx(threading.Thread):
         while True:
             i += 1
             timestamp = time.time()
-            dt = timestamp - last_render
+            dt = (timestamp - last_render)*1000.
             last_render = timestamp
 
             self.update(dt)
