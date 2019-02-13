@@ -41,3 +41,7 @@ class Gx(threading.Thread):
             if i == 1000:
                 print("Pinging users")
                 ping_users()
+
+            if i%1000 == 0:
+                print([getattr(entity, "position") for entity in self.world.entities])
+                

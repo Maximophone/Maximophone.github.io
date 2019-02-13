@@ -1,4 +1,4 @@
-from user_inputs import GameKeys
+from .user_inputs import GameKeys
 
 
 class Camera:

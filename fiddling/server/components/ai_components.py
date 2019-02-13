@@ -15,7 +15,7 @@ def track(pos, target_pos, turn_rate, speed):
             pos.rot += turn_rate
         else:
             pos.rot -= turn_rate
-        if math.abs(delta) < turn_rate:
+        if abs(delta) < turn_rate:
             pos.rot = target_angle
 
     pos.x += speed*math.cos(pos.rot)

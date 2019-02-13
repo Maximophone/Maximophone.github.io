@@ -1,10 +1,7 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO
 
-from server.user_inputs import UserInputs
 from server.users import users
-
-inputs = UserInputs()
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -34,10 +31,13 @@ def ping_users():
 
 @socketio.on("input")
 def handle_input(json):
-    print(f"Received input: {json}")
+    user = users.get_user(request.sid)
+    #print(f"Received input: {json}")
     if json["type"] == "keydown":
-        inputs.press_key(json["key"])
+        print(f"Received input")
+        user.inputs.press_key(json["key"])
     elif json["type"] == "keyup":
-        inputs.release_key(json["key"])
+        user.inputs.release_key(json["key"])
     elif json["type"] == "mousemove":
-        inputs.move_mouse(json["x"], json["y"])
+        pass
+        #user.inputs.move_mouse(json["x"], json["y"])

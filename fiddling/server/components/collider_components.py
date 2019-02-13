@@ -11,7 +11,7 @@ class ColliderComponent:
 
 class CircleColliderComponent(ColliderComponent):
     def __init__(self, entity, r=1):
-        super().__init__(self, entity)
+        super().__init__(entity)
         self.radius = r
         self.type = "circle"
 

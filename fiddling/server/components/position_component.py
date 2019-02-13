@@ -27,3 +27,6 @@ class PositionComponent:
             size *= entity.position.size
 
         return Pos(abs_x, abs_y, self.rot, size)
+
+    def __repr__(self):
+        return f"(X:{self.x:.1f}, Y:{self.y:.1f})"

@@ -1,3 +1,12 @@
+from .camera import Camera
+from .entities.ship import Ship
+from .entities.weapon import Cannon, MissileLauncher
+from .entities.engine import Engine
+from .entities.shield import Shield
+from .user_inputs import UserInputs
+
+PLAYER_HEALTH = 200
+
 class Users:
     def __init__(self):
         self.connected = {}
@@ -10,13 +19,40 @@ class Users:
         user.disconnect()
         del user
 
+    def get_user(self, sid):
+        assert sid in self.connected, f"Cannot find user with sid: {sid}"
+        return self.connected[sid]
+
 
 class User:
     def __init__(self, sid):
         self.sid = sid
+        self.inputs = UserInputs()
+        self.camera = None
+        self.entities = []
+        self.in_world = False
 
     def disconnect(self):
         pass
+
+    def join_world(self, world):
+        ship = Ship(1, 100, 100, 0, 20, PLAYER_HEALTH, None)
+        engine = Engine(ship, 10, 0.01, 0.05)
+        ship.engine = engine
+        weapon1 = Cannon(ship, 1, 0.5, 0.05, 100, 15)
+        weapon2 = Cannon(ship, 1, -0.5, -0.05, 100, 15)
+        weapon3 = MissileLauncher(ship, 1, 0., 0., 5000, 5)
+        shield = Shield(ship, 3, 100, 0.01, 5000)
+        ship.weapons.extend([weapon1, weapon2, weapon3])
+        ship.shield = shield
+
+        ship.set_user(self)
+
+        world.entities.extend([ship, engine, weapon1, weapon2, weapon3, shield])
+        
+        self.camera = Camera(0, 0, 50, ship, self.inputs)
+        self.in_world = True
+        
 
 
 users = Users()

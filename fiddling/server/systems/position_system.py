@@ -8,7 +8,7 @@ class PositionSystem(System):
         self.components.append(position)
         return position
 
-    def update(self):
+    def update(self, world, dt):
         self.garbage_collect()
 
 
