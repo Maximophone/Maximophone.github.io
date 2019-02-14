@@ -6,6 +6,7 @@ import math
 
 class Shield(Entity):
     def __init__(self, ship, size, health, regen_rate=0, downtime=1000):
+        super().__init__()
         self.parent = ship
         self.type = "shield"
         self.id = ship.id
@@ -28,3 +29,9 @@ class Shield(Entity):
                 self.downtime_left -= dt
         else:
             self.health = min(self.max_health, self.health + self.regen_rate*dt)
+
+    def serialise(self):
+        return {
+            "health": self.health,
+            "max_health": self.max_health
+        }

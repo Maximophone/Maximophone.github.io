@@ -5,6 +5,7 @@ import math
 
 class Bullet(Entity):
     def __init__(self, id, x, y, rot, v, size=2, damage=10):
+        super().__init__()
         self.type = "bullet"
         self.id = id
         self.damage = damage

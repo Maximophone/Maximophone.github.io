@@ -1,12 +1,15 @@
 from .entity import Entity
+from .engine import Engine
 from server.systems import position_system, physics_system, ai_system, collision_system
 
 import math
 
 
 class Missile(Entity):
-    def __init__(self, world, id, x, y, rot, v, size=15):
+    def __init__(self, world, ship, id, x, y, rot, v, size=15):
+        super().__init__()
         self.type = "missile"
+        self.ship = ship
         self.id = id
         self.lifetime = 10000
         self.trigger_time = 0.9*self.lifetime
@@ -24,7 +27,7 @@ class Missile(Entity):
         self.lifetime -= dt
         if self.lifetime < self.trigger_time:
             if not hasattr(self, "ai_component"):
-                self.ai_component = ai_system.get_component(self,  "missile")
+                self.ai_component = ai_system.get_component(self, "missile", None)
                 self.engine.accelerate = True
                 self.physics_component.vx = 0
                 self.physics_component.vy = 0
@@ -41,6 +44,7 @@ class Missile(Entity):
 
 class Explosion(Entity):
     def __init__(self, id, x, y, size=200, damage=20):
+        super().__init__()
         self.type = "explosion"
         self.id = id
         self.lifetime = 1000

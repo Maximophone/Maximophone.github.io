@@ -25,3 +25,5 @@ class World:
         for user in users.connected.values():
             if not user.in_world:
                 user.join_world(self)
+            else:
+                user.camera.update(dt)

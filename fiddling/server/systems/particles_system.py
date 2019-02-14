@@ -64,5 +64,19 @@ class ParticlesPool:
                 particle.next = self.first_available
                 self.first_available = particle
 
+    def _serialise(self):
+        ret = []
+        # TODO: improve this so that we don't loop on all particles
+        for particle in self.particles:
+            if particle.in_use():
+                ret.append({
+                    "type": particle.type,
+                    "x": particle.position.x,
+                    "y": particle.position.y,
+                    "rot": particle.position.rot,
+                    "size": particle.position.size
+                    })
+        return ret
+
 
 particles_pool = ParticlesPool(1000)

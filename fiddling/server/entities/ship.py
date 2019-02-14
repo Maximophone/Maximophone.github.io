@@ -1,6 +1,6 @@
 from .entity import Entity
 from .loot import Loot
-from server.systems import position_system, physics_system, input_system, ai_system, collision_system
+from server.systems import position_system, physics_system, input_system, ai_system, collision_system, particles_pool
 
 from random import random
 import math
@@ -8,6 +8,7 @@ import math
 
 class Ship(Entity):
     def __init__(self, id, x, y, rot, size, health, engine, weapons=[], ai=False, target=None):
+        super().__init__()
         self.type = "ship"
         self.id = id
         self.health = health
@@ -68,4 +69,11 @@ class Ship(Entity):
                 50,
                 50
             )
-            self.spawn_loot(world)        
+            self.spawn_loot(world)
+
+    def serialise(self):
+        return {
+            "health": self.health,
+            "max_health": self.max_health
+        }
+        

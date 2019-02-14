@@ -12,6 +12,7 @@ SPAWN_DIST = 800
 
 class EnnemySpawner(Entity):
     def __init__(self, world, player, spawn_interval):
+        super().__init__()
         self.world = world
         self.player = player
         self.spawn_interval = spawn_interval

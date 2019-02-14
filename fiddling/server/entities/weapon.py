@@ -16,6 +16,7 @@ def get_pos_bullet(weapon):
 
 class Weapon(Entity):
     def __init__(self, ship, x, y, rot, ai=False, input="weapon"):
+        super().__init__()
         self.type = "weapon"
         self.parent = ship
         self.firing = False
@@ -58,6 +59,7 @@ class MissileLauncher(Weapon):
             x, y = get_pos_bullet(self)
             projectile = Missile(
                 world,
+                self.parent,
                 self.parent.id,
                 x,
                 y,

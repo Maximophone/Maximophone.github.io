@@ -33,7 +33,8 @@ class User:
         self.in_world = False
 
     def disconnect(self):
-        pass
+        for entity in self.entities:
+            entity.lifetime = -1
 
     def join_world(self, world):
         ship = Ship(1, 100, 100, 0, 20, PLAYER_HEALTH, None)
@@ -49,10 +50,26 @@ class User:
         ship.set_user(self)
 
         world.entities.extend([ship, engine, weapon1, weapon2, weapon3, shield])
+        self.entities.extend([ship, engine, weapon1, weapon2, weapon3, shield])
         
         self.camera = Camera(0, 0, 50, ship, self.inputs)
         self.in_world = True
-        
+
+    def _serialise(self):
+        if self.in_world:
+            ret = {
+                "id": self.sid,
+                "entities": [entity._id for entity in self.entities],
+                "camera": {
+                    "x": self.camera.x,
+                    "y": self.camera.y,
+                    "size": self.camera.size
+                }
+            }
+        else:
+            ret = {"id": self.sid}
+        return ret
+                
 
 
 users = Users()

@@ -23,7 +23,7 @@ def track(pos, target_pos, turn_rate, speed):
 
 
 class AIComponent:
-    def __init__(self, entity):
+    def __init__(self, entity, *args):
         self.entity = entity
 
 
@@ -46,7 +46,12 @@ class ShipAIComponent(AIComponent):
 
 class MissileAIComponent(AIComponent):
     def update(self, dt):
-        pass
+        user_inputs = self.entity.ship.user.inputs
+        SPEED = 10
+        TURN_RATE = 0.15
+        pos = self.entity.position
+        target_pos = user_inputs.get_mouse_target()
+        track(pos, target_pos, TURN_RATE, SPEED)
 
 
 ai_components = {

@@ -4,6 +4,7 @@ from server.systems import input_system, position_system
 
 class Engine(Entity):
     def __init__(self, ship, max_v, delta_v, delta_rot, ai=False):
+        super().__init__()
         self.parent = ship
         self.type = "engine"
         self.max_v = max_v
