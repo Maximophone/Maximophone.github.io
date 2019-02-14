@@ -4,13 +4,14 @@ from server.systems import position_system, physics_system, input_system, ai_sys
 
 from random import random
 import math
+import ipdb
 
 
 class Ship(Entity):
     def __init__(self, id, x, y, rot, size, health, engine, weapons=[], ai=False, target=None):
         super().__init__()
         self.type = "ship"
-        self.id = id
+        self.id = self._id+5
         self.health = health
         self.max_health = health
         self.lifetime = 1
@@ -47,6 +48,7 @@ class Ship(Entity):
                     collider.entity.lifetime = -1
 
         if self.health <= 0:
+            #ipdb.set_trace()
             self.lifetime = -1
             self.engine.lifetime = -1
             for weapon in self.weapons:

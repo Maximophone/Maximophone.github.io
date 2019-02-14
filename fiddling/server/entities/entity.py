@@ -8,6 +8,7 @@ class Entity:
     def __init__(self):
         self.type = "entity"
         self._id = next(Entity._id_gen)
+        self.lifetime = 1
 
     @property
     def to_delete(self):

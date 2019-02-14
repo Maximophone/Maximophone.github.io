@@ -28,7 +28,8 @@ function draw(state){
     if(user && user.camera){
 	var camera = user.camera
 	var entities = state.entities
-	painter.draw(camera, entities)
+	var particles = state.particles
+	painter.draw(camera, entities, particles)
     }
 }
 

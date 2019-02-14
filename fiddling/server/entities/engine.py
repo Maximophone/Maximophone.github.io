@@ -13,6 +13,8 @@ class Engine(Entity):
         self.lifetime = 1
         self.accelerate = False
         self.deccelerate = False
+        self.strafe_right = False
+        self.strafe_left = False
         self.target_angle = 0
         if not ai:
             self.input_component = input_system.get_component(self, "engine")
@@ -21,3 +23,11 @@ class Engine(Entity):
     def update(self, world, dt):
         if self.parent.lifetime < 0:
             self.lifetime = -1
+
+    def serialise(self):
+        return {
+            "accelerate": self.accelerate,
+            "deccelerate": self.deccelerate,
+            "strafe_right": self.strafe_right,
+            "strafe_left": self.strafe_left
+        }

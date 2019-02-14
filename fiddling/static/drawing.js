@@ -53,8 +53,12 @@ class Painter {
 	    return
 	}
 	var parents_chain = [entity]
-	while(entity.parent_id){
+	while(entity.hasOwnProperty("parent_id")){
 	    entity = entities[entity.parent_id]
+	    if(entity === undefined){
+		// this parent has been destroyed so we wont draw it
+		return
+	    }
 	    parents_chain.push(entity)
 	}
 	set_identity(this.buffer_mat)
@@ -71,9 +75,10 @@ class Painter {
 	scale_mat(this.buffer_mat, this.output_mat, 1/camera.size, 1/camera.size)
 	curr_graphics.uniforms.viewMat.set(this.output_mat)
 
+	var entity = parents_chain[0]
 	component.draw(entity)
     }
-    draw(camera, entities){
+    draw(camera, entities, particles){
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 	gl.disable(gl.BLEND)
 	var i = 0
@@ -98,7 +103,10 @@ class Painter {
 	for(var el of transparent_components){
 	    this.draw_component(camera, el[1], el[0], entities)
 	}
-	// TODO: add particles
+	for(var particle of particles){
+	    var component = graphics_components[particle.type]
+	    this.draw_component(camera, component, particle, particles)
+	}
     }
 }
 

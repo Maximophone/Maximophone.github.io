@@ -4,6 +4,9 @@ from .entities.weapon import Cannon, MissileLauncher
 from .entities.engine import Engine
 from .entities.shield import Shield
 from .user_inputs import UserInputs
+from .utils import garbage_filter
+
+from random import random
 
 PLAYER_HEALTH = 200
 
@@ -33,11 +36,17 @@ class User:
         self.in_world = False
 
     def disconnect(self):
+        #import ipdb
+        #ipdb.set_trace()
         for entity in self.entities:
             entity.lifetime = -1
+        garbage_filter(self.entities, lambda x: x.to_delete)
+        
 
     def join_world(self, world):
-        ship = Ship(1, 100, 100, 0, 20, PLAYER_HEALTH, None)
+        spawn_x = 1000*(random()*2-1)
+        spawn_y = 1000*(random()*2-1)
+        ship = Ship(1, spawn_x, spawn_y, 0, 20, PLAYER_HEALTH, None)
         engine = Engine(ship, 10, 0.01, 0.05)
         ship.engine = engine
         weapon1 = Cannon(ship, 1, 0.5, 0.05, 100, 15)
