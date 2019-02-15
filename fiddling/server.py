@@ -1,8 +1,10 @@
 from app import socketio, app
 from server.game import Gx
 
-if __name__ == "__main__":
+def start_game():
     gx = Gx()
-
     gx.start()
-    socketio.run(app)
+
+if __name__ == "__main__":
+    start_game()
+    socketio.run(app, host="0.0.0.0")

@@ -19,7 +19,7 @@ class EnnemySpawner(Entity):
         self.player = player
         self.spawn_interval = spawn_interval
         self.timeleft = 0
-        self.intensity = 10
+        self.intensity = 1
 
     def spawn(self, n):
         for i in range(n):
