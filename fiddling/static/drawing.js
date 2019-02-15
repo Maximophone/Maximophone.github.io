@@ -81,14 +81,19 @@ class Painter {
     draw(camera, entities, particles){
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 	gl.disable(gl.BLEND)
+	// drawing map
+	this.draw_component(camera, graphics_components.map, {
+	    x: 0,
+	    y: 0,
+	    rot: 0,
+	    size: 100
+	}, entities)
 	var i = 0
 	var transparent_components = []
 	for(var entity_id in entities){
 	    var entity = entities[entity_id]
-	    if(entity){
-		var a = 2
-	    }
-	    else {
+	    if(!graphics_components.hasOwnProperty(entity.type)){
+		// We don't have any component to draw this type of entity
 		continue
 	    }
 	    var component = graphics_components[entity.type]

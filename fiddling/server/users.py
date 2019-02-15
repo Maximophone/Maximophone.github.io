@@ -3,6 +3,8 @@ from .entities.ship import Ship
 from .entities.weapon import Cannon, MissileLauncher
 from .entities.engine import Engine
 from .entities.shield import Shield
+from .entities.mouse_pointer import MousePointer
+from .entities.spawner import EnnemySpawner
 from .user_inputs import UserInputs
 from .utils import garbage_filter
 
@@ -57,12 +59,16 @@ class User:
         ship.shield = shield
 
         ship.set_user(self)
-
-        world.entities.extend([ship, engine, weapon1, weapon2, weapon3, shield])
-        self.entities.extend([ship, engine, weapon1, weapon2, weapon3, shield])
-        
         self.camera = Camera(0, 0, 50, ship, self.inputs)
+
+        pointer = MousePointer(self.camera, self)
+        spawner = EnnemySpawner(world, ship, 20000)
+
+        world.entities.extend([ship, engine, weapon1, weapon2, weapon3, shield, pointer, spawner])
+        self.entities.extend([ship, engine, weapon1, weapon2, weapon3, shield, pointer, spawner])
+
         self.in_world = True
+
 
     def _serialise(self):
         if self.in_world:

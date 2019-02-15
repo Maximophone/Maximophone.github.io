@@ -15,7 +15,7 @@ def fps(dt):
     last_dt.append(dt)
     if len(last_dt) >= N:
         mean_dt = np.mean(last_dt)
-        # print(f"FPS: {1000./mean_dt:.0f}")
+        print(f"FPS: {1000./mean_dt:.0f}")
         del last_dt[:]
 
 
@@ -50,7 +50,7 @@ class Gx(threading.Thread):
             last_render = timestamp
 
             self.update(dt)
-            time.sleep(0.01)
+            time.sleep(0.02)
             self.broadcast()
 
             if i == 1000:
@@ -58,6 +58,7 @@ class Gx(threading.Thread):
                 ping_users()
 
             if i%1000 == 0:
-                print([entity._serialise() for entity in self.world.entities])
+                pass
+                # print([entity._serialise() for entity in self.world.entities])
                 # print([getattr(entity, "position") for entity in self.world.entities])
                 

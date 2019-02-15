@@ -8,14 +8,14 @@ import ipdb
 
 
 class Ship(Entity):
-    def __init__(self, id, x, y, rot, size, health, engine, weapons=[], ai=False, target=None):
+    def __init__(self, id, x, y, rot, size, health, engine, ai=False, target=None):
         super().__init__()
         self.type = "ship"
         self.id = self._id+5
         self.health = health
         self.max_health = health
         self.lifetime = 1
-        self.weapons = weapons
+        self.weapons = []
         self.engine = engine
         self.shield = None
         self.position = position_system.get_position(self, x, y, rot, size)
@@ -48,9 +48,10 @@ class Ship(Entity):
                     collider.entity.lifetime = -1
 
         if self.health <= 0:
-            #ipdb.set_trace()
             self.lifetime = -1
             self.engine.lifetime = -1
+            if hasattr(self, "shield") and self.shield is not None:
+                self.shield.lifetime = -1
             for weapon in self.weapons:
                 weapon.lifetime = -1
             particles_pool.create(

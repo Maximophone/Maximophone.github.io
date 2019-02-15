@@ -35,7 +35,7 @@ class Missile(Entity):
             colliding = False
             if self.collider_component.is_colliding:
                 for collider in self.collider_component.colliding_with:
-                    if collider.entity.id == 1 or collider.entity.id == 2:
+                    if collider.entity.type != "loot":
                         colliding = True
             if colliding or self.lifetime <= 0:
                 world.entities.append(Explosion(self.id, self.position.x, self.position.y))

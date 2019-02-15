@@ -49,3 +49,6 @@ class Entity:
             ret.update(self.serialise())
         return ret
             
+
+    def update(self, *args):
+        pass

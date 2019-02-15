@@ -50,7 +50,7 @@ class MissileAIComponent(AIComponent):
         SPEED = 10
         TURN_RATE = 0.15
         pos = self.entity.position
-        target_pos = user_inputs.get_mouse_target()
+        target_pos = user_inputs.get_mouse_target(self.entity.ship.user.camera)
         track(pos, target_pos, TURN_RATE, SPEED)
 
 

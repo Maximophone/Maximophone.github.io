@@ -9,26 +9,13 @@ class GraphicsComponent {
     }
 }
 
-// class MapGraphicsComponent extends GraphicsComponent{
-//     constructor(entity){
-// 	super(entity)
-// 	this.graphics = graphics_map
-//     }
-//     draw(){
-// 	this.graphics.draw("rect")
-//     }
-// }
+class MapGraphicsComponent extends GraphicsComponent{
+    static draw(){
+	graphics_map.draw("rect")
+    }
+    static get_graphics(){ return graphics_map }
+}
 
-
-// class ShipGraphicsComponent extends GraphicsComponent {
-//     draw(){
-// 	var injured_display = ((this.entity.health<=0.1*this.entity.max_health)&(this.blink(0.5)))
-// 	var params = {
-// 	    fillColor: injured_display?"#aa1100":"#b322fd"
-// 	}
-// 	this.graphics.draw("circle", params)
-//     }
-// }
 
 class ShipGraphicsComponent extends GraphicsComponent {
     static draw(entity){	
@@ -184,7 +171,7 @@ export var graphics_components = {
     missile: MissileGraphicsComponent,
     explosion: ExplosionGraphicsComponent,
     weapon: WeaponGraphicsComponent,
-    //map: MapGraphicsComponent,
+    map: MapGraphicsComponent,
     shield: ShieldGraphicsComponent,
     pointer: PointerGraphicsComponent,
     fading_particle: DebugStatic,
