@@ -13,15 +13,13 @@ socket.on("connect", function(){
 socket.on("ping", function(){
     console.log("pinged!")
 })
+
+var global_state
 socket.on("state", function(state){
-    // state = unfold_entities(state)
-    draw(state)
+    global_state = state
 })
 
 export var c = document.getElementById("c");
-//export var ctx = c.getContext("2d");
-
-//var game = new Game(ctx)
 
 function draw(state){
     var user = state.users[user_sid]
@@ -33,11 +31,29 @@ function draw(state){
     }
 }
 
+var last_dt = []
+
+function fps(dt){
+    var N = 100
+    last_dt.push(dt)
+    if(last_dt.length >= N){
+	var mean_dt = 0
+	for(var dt of last_dt){
+	    mean_dt += dt
+	}
+	mean_dt /= N
+	console.log("FPS: ", 1000/mean_dt)
+	last_dt = []
+    }
+}
+
 function loop(timestamp) {
     var dt = timestamp - lastRender;
 
-    //game.update(dt);
-    //game.draw();
+    fps(dt)
+    if(!(global_state === undefined)){
+	draw(global_state)
+    }
 
     lastRender = timestamp;
     window.requestAnimationFrame(loop);
