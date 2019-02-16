@@ -11,7 +11,7 @@ class Ship(Entity):
     def __init__(self, id, x, y, rot, size, health, engine, ai=False, target=None):
         super().__init__()
         self.type = "ship"
-        self.id = self._id+5
+        self.id = id if ai else self._id + 5 
         self.health = health
         self.max_health = health
         self.lifetime = 1
