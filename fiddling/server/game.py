@@ -7,16 +7,20 @@ from app import ping_users, send_state
 from .users import users
 from .systems.particles_system import particles_pool
 
-last_dt = []
+TARGET_DT = 1/60
 
 
-def fps(dt):
-    N = 100
-    last_dt.append(dt)
-    if len(last_dt) >= N:
-        mean_dt = np.mean(last_dt)
-        print(f"FPS: {1000./mean_dt:.0f}")
-        del last_dt[:]
+def gen_fps():
+    last_dt = []
+    def fps(dt):
+        N = 100
+        last_dt.append(dt)
+        if len(last_dt) >= N:
+            mean_dt = np.mean(last_dt)
+            print(f"FPS: {1000./mean_dt:.0f}")
+            del last_dt[:]
+    return fps
+fps = gen_fps()
 
 
 class Gx(threading.Thread):
@@ -50,15 +54,12 @@ class Gx(threading.Thread):
             last_render = timestamp
 
             self.update(dt)
-            time.sleep(0.02)
             self.broadcast()
+            
+            # Now we adjust the time to stick to TARGET_DT
+            timestamp_2 = time.time()
+            dt_2 = timestamp_2 - timestamp
+            if dt_2 < TARGET_DT:
+                time.sleep(TARGET_DT - dt_2)
 
-            if i == 1000:
-                print("Pinging users")
-                ping_users()
-
-            if i%1000 == 0:
-                pass
-                # print([entity._serialise() for entity in self.world.entities])
-                # print([getattr(entity, "position") for entity in self.world.entities])
                 
