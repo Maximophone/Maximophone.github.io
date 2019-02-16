@@ -10,7 +10,7 @@ class Loot(Entity):
         super().__init__()
         self.type = "loot"
         self.id = 3
-        self.lifetime = 1e6 + random()*5e4
+        self.lifetime = 5e4 + random()*5e4
         self.health = 1
 
         self.position = position_system.get_position(self, x, y, rot, size)
@@ -20,5 +20,7 @@ class Loot(Entity):
         self.physics_component.vy = v * math.sin(rot)
         self.physics_component.v_rot = v_rot
 
-    def update(self, *args):
-        pass
+    def update(self, world, dt):
+        self.lifetime -= dt
+        if self.health <= 0:
+            self.lifetime = -1
