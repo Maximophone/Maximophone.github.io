@@ -41,7 +41,8 @@ class Entity:
                 "x": self.position.x,
                 "y": self.position.y,
                 "rot": self.position.rot,
-                "size": self.position.size
+                "size_x": self.position.size_x,
+                "size_y": self.position.size_y
                 })
         if hasattr(self, "lifetime"):
             ret["lifetime"] = self.lifetime

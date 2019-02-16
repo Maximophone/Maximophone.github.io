@@ -36,14 +36,14 @@ class Bullet(Entity):
             "fading_particle",
             self.position.x,
             self.position.y,
-            0, 0, 20, 20)
+            0, 0, 20, 20, 20)
         particles_pool.create(
             "fading_particle",
             self.position.x,
             self.position.y,
-            0, 0, 10, 50)
+            0, 0, 10, 10, 50)
         particles_pool.create(
             "fading_particle",
             self.position.x,
             self.position.y,
-            0, 0, 5, 50)
+            0, 0, 5, 5, 50)

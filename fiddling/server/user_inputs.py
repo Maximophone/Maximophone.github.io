@@ -26,8 +26,8 @@ class UserInputs:
     def get_mouse_target(self, camera=None):
         if camera is not None:
             return MousePos(
-                self._mouse_target.x * camera.size + camera.x,
-                self._mouse_target.y * camera.size + camera.y
+                self._mouse_target.x * camera.size_x + camera.x,
+                self._mouse_target.y * camera.size_y + camera.y
             )
         else:
             return self._mouse_target

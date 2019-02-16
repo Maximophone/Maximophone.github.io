@@ -38,5 +38,5 @@ class EnnemySpawner(Entity):
         self.timeleft -= dt
         if self.timeleft < 0 and self.player.health>0:
             self.timeleft = self.spawn_interval
-            # self.intensity += 1
+            self.intensity += 1
             self.spawn(self.intensity)

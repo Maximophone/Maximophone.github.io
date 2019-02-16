@@ -43,7 +43,8 @@ class Ship(Entity):
                     if hasattr(collider.entity, "id") and collider.entity.id != self.id:
                         self.health -= dt
                 elif collider.entity.type == "loot":
-                    self.position.size *= 1.001
+                    self.position.size_x *= 1.001
+                    self.position.size_y *= 1.001
                     self.health *= 1.001
                     collider.entity.lifetime = -1
 
@@ -61,6 +62,7 @@ class Ship(Entity):
                 0,
                 0,
                 100,
+                100,
                 25
             )
             particles_pool.create(
@@ -69,6 +71,7 @@ class Ship(Entity):
                 self.position.y,
                 0,
                 0,
+                50,
                 50,
                 50
             )

@@ -1,6 +1,7 @@
 from .entity import Entity
 from .bullet import Bullet
 from .missile import Missile
+from .laser_beam import LaserBeam
 from server.systems import position_system, input_system
 
 import math
@@ -9,8 +10,8 @@ import math
 def get_pos_bullet(weapon):
     pos = weapon.position
     pos_parent = weapon.parent.position
-    x = pos_parent.x + pos_parent.size*(pos.x*math.cos(-pos_parent.rot) + pos.y*math.sin(-pos_parent.rot))
-    y = pos_parent.y - pos_parent.size*(pos.x*math.sin(-pos_parent.rot) + pos.y*math.cos(-pos_parent.rot))
+    x = pos_parent.x + pos_parent.size_x*(pos.x*math.cos(-pos_parent.rot) + pos.y*math.sin(-pos_parent.rot))
+    y = pos_parent.y - pos_parent.size_y*(pos.x*math.sin(-pos_parent.rot) + pos.y*math.cos(-pos_parent.rot))
     return x, y
 
 
@@ -20,7 +21,7 @@ class Weapon(Entity):
         self.type = "weapon"
         self.parent = ship
         self.firing = False
-        self.position = position_system.get_position(self, x, y, rot, 0.2)
+        self.position = position_system.get_position(self, x, y, rot, 0.4, 0.2)
         if not ai:
             self.input_component = input_system.get_component(self, input)
 
@@ -67,3 +68,28 @@ class MissileLauncher(Weapon):
                 self.parent.physics_component.v() + self.missile_speed)
             world.entities.append(projectile)
             self.timer = self.firing_rate
+
+
+class Laser(Weapon):
+    def __init__(self, ship, x, y, rot, length=50, dps=5):
+        super().__init__(ship, x, y, rot, False, "weapon_secondary")
+        self.dps = dps
+        self.length = length
+        self.beam = None
+
+    def update(self, world, dt):
+        if self.firing:
+            x, y = get_pos_bullet(self)
+            self.beam = LaserBeam(
+                self.parent.id,
+                x,
+                y,
+                self.parent.position.rot + self.position.rot,
+                self.length,
+                self.dps
+            )
+            world.entities.append(self.beam)
+        else:
+            self.beam.lifetime = -1
+            self.beam = None
+        

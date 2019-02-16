@@ -63,5 +63,5 @@ class Explosion(Entity):
 
         t = 1 - self.lifetime/self.init_lifetime
         t = t**5
-        self.position.size = t*self.size_1 + (1-t)*self.size_0
+        self.position.size_x = self.position.size_y = t*self.size_1 + (1-t)*self.size_0
         self.lifetime -= dt

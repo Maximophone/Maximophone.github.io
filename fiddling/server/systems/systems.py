@@ -6,8 +6,8 @@ class System:
         self.components = []
         self.components_dict = None
 
-    def get_component(self, entity, type):
-        component = self.components_dict[type](entity)
+    def get_component(self, entity, type, *args, **kwargs):
+        component = self.components_dict[type](entity, *args, **kwargs)
         self.components.append(component)
         return component
 

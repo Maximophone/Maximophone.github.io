@@ -1,27 +1,29 @@
 class PartPos:
-    def __init__(self, x, y, rot, size):
+    def __init__(self, x, y, rot, size_x, size_y):
         self.x = x
         self.y = y
         self.rot = rot
-        self.size = size
+        self.size_x = size_x
+        self.size_y = size_y
 
 
 class Particle:
     def __init__(self):
         self.type = ""
-        self.position = PartPos(0, 0, 0, 1)
+        self.position = PartPos(0, 0, 0, 1, 1)
         self.v = 0
         self.lifetime = 0
         self.max_lifetime = 0
         self.next = None
 
-    def init(self, type, x, y, rot, v, size, lifetime):
+    def init(self, type, x, y, rot, v, size_x, size_y, lifetime):
         self.type = type
         self.position.x = x
         self.position.y = y
         self.position.rot = rot
         self.v = v
-        self.position.size = size
+        self.position.size_x = size_x
+        self.position.size_y = size_y
         self.lifetime = lifetime
         self.max_lifetime = lifetime
 
@@ -47,7 +49,7 @@ class ParticlesPool:
         for i in range(pool_size - 1):
             self.particles[i].next = self.particles[i+1]
 
-    def create(self, type, x, y, rot, v, size, lifetime):
+    def create(self, type, x, y, rot, v, size_x, size_y, lifetime):
         if self.first_available is None:
             print("Particle pool is full")
             return
@@ -55,7 +57,7 @@ class ParticlesPool:
         new_particle = self.first_available
         self.first_available = new_particle.next
 
-        new_particle.init(type, x, y, rot, v, size, lifetime)
+        new_particle.init(type, x, y, rot, v, size_x, size_y, lifetime)
 
     def update(self, world, dt):
         for particle in self.particles:
@@ -74,7 +76,8 @@ class ParticlesPool:
                     "x": particle.position.x,
                     "y": particle.position.y,
                     "rot": particle.position.rot,
-                    "size": particle.position.size
+                    "size_x": particle.position.size_x,
+                    "size_y": particle.position.size_y
                     })
         return ret
 

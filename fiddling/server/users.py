@@ -78,7 +78,8 @@ class User:
                 "camera": {
                     "x": self.camera.x,
                     "y": self.camera.y,
-                    "size": self.camera.size
+                    "size_x": self.camera.size_x,
+                    "size_y": self.camera.size_y
                 }
             }
         else:

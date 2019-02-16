@@ -84,10 +84,12 @@ class PlayerInputWeaponSecondaryComponent(InputComponent):
 class PlayerInputDebugComponent(InputComponent):
     def update(self, dt):
         if self.user_inputs.pressed_key(KeyCodes.LEFT):
-            self.entity.position.size *= 1.1
+            self.entity.position.size_x *= 1.1
+            self.entity.position.size_y *= 1.1
 
         if self.user_inputs.pressed_key(KeyCodes.RIGHT):
-            self.entity.position.size *= 0.9
+            self.entity.position.size_x *= 0.9
+            self.entity.position.size_y *= 0.9
 
 
 input_components = {

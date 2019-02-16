@@ -7,8 +7,10 @@ class Collider(NamedTuple):
     typ: str
     x: float
     y: float
-    size: float
+    size_x: float
+    size_y: float
     r: float
+    l: float
 
 
 class CollisionSystem(System):
@@ -30,8 +32,10 @@ class CollisionSystem(System):
                     typ=component.type.encode(),
                     x=absolute_pos.x,
                     y=absolute_pos.y,
-                    size=absolute_pos.size,
-                    r=component.radius
+                    size_x=absolute_pos.size_x,
+                    size_y=absolute_pos.size_y,
+                    r=component.radius if hasattr(component, "radius") else 0,
+                    l=component.length if hasattr(component, "length") else 0
                 )
             )
 
@@ -41,16 +45,5 @@ class CollisionSystem(System):
             collider.is_colliding = bool(col_resp[0])
             for i in col_resp[1]:
                 collider.colliding_with.append(self.components[i])
-        # for i in range(len(self.components)):
-        #     for j in range(i+1, len(self.components)):
-        #         collider1 = self.components[i]
-        #         collider2 = self.components[j]
-
-        #         if collider1.collides_with(collider2):
-        #             collider1.is_colliding = True
-        #             collider2.is_colliding = True
-        #             collider1.colliding_with.append(collider2)
-        #             collider2.colliding_with.append(collider1)
-
 
 collision_system = CollisionSystem()

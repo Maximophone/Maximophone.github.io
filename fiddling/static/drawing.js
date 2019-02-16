@@ -63,8 +63,9 @@ class Painter {
 	}
 	set_identity(this.buffer_mat)
 	for(var entity of parents_chain){
-	    var size = entity.size || 1
-	    scale_mat(this.buffer_mat, this.output_mat, size, size)
+	    var size_x = entity.size_x || 1
+	    var size_y = entity.size_y || 1
+	    scale_mat(this.buffer_mat, this.output_mat, size_x, size_y)
 	    rotate_mat(this.output_mat, this.buffer_mat, entity.rot)
 	    translate_mat(this.buffer_mat, this.output_mat, entity.x, entity.y, 0)
 	    mat4.copy(this.buffer_mat, this.output_mat)
@@ -72,7 +73,7 @@ class Painter {
 	curr_graphics.uniforms.worldMat.set(this.output_mat)
 	set_identity(this.output_mat)
 	translate_mat(this.output_mat, this.buffer_mat, -camera.x, -camera.y, 0)
-	scale_mat(this.buffer_mat, this.output_mat, 1/camera.size, 1/camera.size)
+	scale_mat(this.buffer_mat, this.output_mat, 1/camera.size_x, 1/camera.size_y)
 	curr_graphics.uniforms.viewMat.set(this.output_mat)
 
 	var entity = parents_chain[0]
@@ -86,7 +87,8 @@ class Painter {
 	    x: 0,
 	    y: 0,
 	    rot: 0,
-	    size: 100
+	    size_x: 100,
+	    size_y: 100
 	}, entities)
 	var i = 0
 	var transparent_components = []

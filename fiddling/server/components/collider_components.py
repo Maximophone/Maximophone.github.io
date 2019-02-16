@@ -15,15 +15,13 @@ class CircleColliderComponent(ColliderComponent):
         self.radius = r
         self.type = "circle"
 
-    def collides_with(self, collider):
-        if not self.active:
-            return False
-        if collider.type == "circle":
-            pos_self = self.entity.position.get_absolute_pos()
-            pos_other = collider.entity.position.get_absolute_pos()
-            return distance(pos_self, pos_other) < pos_self.size*self.radius + pos_other.size*collider.radius
 
-
+class LineColliderComponent(ColliderComponent):
+    def __init__(self, entity, length):
+        super().__init__(entity)
+        self.length = length
+        self.type = "line"
+        
 collider_components = {
     "circle": CircleColliderComponent
 }
