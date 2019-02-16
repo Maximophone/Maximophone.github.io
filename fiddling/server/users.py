@@ -49,7 +49,7 @@ class User:
         spawn_x = 1000*(random()*2-1)
         spawn_y = 1000*(random()*2-1)
         ship = Ship(1, spawn_x, spawn_y, 0, 20, PLAYER_HEALTH, None)
-        engine = Engine(ship, 10, 0.01, 0.05)
+        engine = Engine(ship, 10, 0.01, 0.1)
         ship.engine = engine
         weapon1 = Cannon(ship, 1, 0.5, 0.05, 100, 15)
         weapon2 = Cannon(ship, 1, -0.5, -0.05, 100, 15)
