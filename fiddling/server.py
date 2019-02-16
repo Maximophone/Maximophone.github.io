@@ -1,3 +1,6 @@
+import eventlet
+eventlet.monkey_patch()
+
 from app import socketio, app
 from server.game import Gx
 
