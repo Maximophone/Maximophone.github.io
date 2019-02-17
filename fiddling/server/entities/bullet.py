@@ -4,11 +4,12 @@ from server.systems import physics_system, collision_system, position_system, pa
 import math
 
 class Bullet(Entity):
-    def __init__(self, id, x, y, rot, v, size=2, damage=10):
+    def __init__(self, id, x, y, rot, v, size=2, damage=10, color="#ffffcc"):
         super().__init__()
         self.type = "bullet"
         self.id = id
         self.damage = damage
+        self.color = color
         self.lifetime = 5000
         self.position = position_system.get_position(self, x, y, rot, size)
         self.physics_component = physics_system.get_component(self, "bullet")
@@ -47,3 +48,6 @@ class Bullet(Entity):
             self.position.x,
             self.position.y,
             0, 0, 5, 5, 50)
+
+    def serialise(self):
+        return {"color": self.color}

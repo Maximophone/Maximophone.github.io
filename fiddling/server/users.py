@@ -38,8 +38,6 @@ class User:
         self.in_world = False
 
     def disconnect(self):
-        #import ipdb
-        #ipdb.set_trace()
         for entity in self.entities:
             entity.lifetime = -1
         garbage_filter(self.entities, lambda x: x.to_delete)
@@ -66,7 +64,7 @@ class User:
         self.camera = Camera(0, 0, 50, ship, self.inputs)
 
         pointer = MousePointer(self.camera, self)
-        spawner = EnnemySpawner(world, ship, 20000)
+        spawner = EnnemySpawner(world, ship, 10000)
 
         world.entities.extend([ship, engine, weapon1, weapon2, weapon3, shield, pointer, spawner])
         self.entities.extend([ship, engine, weapon1, weapon2, weapon3, shield, pointer, spawner])

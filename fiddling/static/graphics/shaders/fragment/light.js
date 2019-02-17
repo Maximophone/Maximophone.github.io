@@ -13,7 +13,7 @@ float light(vec2 U){
 
 void main(){
   float lv = light(vertPos);
-  vec3 col = vec3(1.) * lv;
+  vec3 col = color.rgb * lv;
   gl_FragColor = vec4(col, lv);
 }
 `

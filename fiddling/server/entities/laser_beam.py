@@ -5,7 +5,7 @@ import math
 
 
 class LaserBeam(Entity):
-    def __init__(self, laser, id, x, y, rot, length, dps):
+    def __init__(self, laser, id, x, y, rot, length, dps, color="#00aa00"):
         super().__init__()
         self.parent = laser
         self.type = "laser_beam"
@@ -13,6 +13,7 @@ class LaserBeam(Entity):
         self.dps = dps
         self.lifetime = 1
         self.length = length
+        self.color = color
         self.position = position_system.get_position(self, length, 0, 0, length, 10)
         self.collider_component = collision_system.get_component(self, "line", length)
 
@@ -36,4 +37,7 @@ class LaserBeam(Entity):
                     collider.entity.health -= self.dps*dt
         self.position.x = new_length
         self.position.size_x = new_length
+
+    def serialise(self):
+        return {"color": self.color}
             

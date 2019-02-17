@@ -28,11 +28,12 @@ class Weapon(Entity):
 
 
 class Cannon(Weapon):
-    def __init__(self, ship, x, y, rot, firing_rate, bullet_speed, ai=False):
+    def __init__(self, ship, x, y, rot, firing_rate, bullet_speed, ai=False, color="#ffffee"):
         super().__init__(ship, x, y, rot, ai)
         self.firing_rate = firing_rate
         self.bullet_speed = bullet_speed
         self.timer = 0
+        self.color = color
 
     def update(self, world, dt):
         self.timer -= dt
@@ -43,7 +44,8 @@ class Cannon(Weapon):
                 x,
                 y,
                 self.parent.position.rot + self.position.rot,
-                self.parent.physics_component.v() + self.bullet_speed)
+                self.parent.physics_component.v() + self.bullet_speed,
+                color = self.color)
             world.entities.append(projectile)
             self.timer = self.firing_rate
 
@@ -72,11 +74,12 @@ class MissileLauncher(Weapon):
 
 
 class Laser(Weapon):
-    def __init__(self, ship, x, y, rot, length=75, dps=0.02):
-        super().__init__(ship, x, y, rot, False, "weapon_secondary")
+    def __init__(self, ship, x, y, rot, length=75, dps=0.02, color="#00aa00", ai=False):
+        super().__init__(ship, x, y, rot, ai, "weapon_secondary")
         self.dps = dps
         self.length = length
         self.beam = None
+        self.color = color
 
     def update(self, world, dt):
         if self.firing and self.beam is None:
@@ -87,7 +90,8 @@ class Laser(Weapon):
                 self.position.y,
                 self.position.rot,
                 self.length,
-                self.dps
+                self.dps,
+                color = self.color
             )
             world.entities.append(self.beam)
         elif not self.firing and self.beam is not None:

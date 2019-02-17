@@ -41,9 +41,11 @@ class EngineGraphicsComponent extends GraphicsComponent {
     
 
 class BulletGraphicsComponent extends GraphicsComponent {
-    static draw(){
-	graphics.draw("circle", {fillColor: "#ffffaa"})
+    static draw(entity){
+	graphics_light.draw("large_rect", {fillColor: entity.color})
     }
+    static is_transparent(){return true}
+    static get_graphics(){return graphics_light}
 }
 
 class MissileGraphicsComponent extends GraphicsComponent {
@@ -61,8 +63,8 @@ class ExplosionGraphicsComponent extends GraphicsComponent {
 }
 
 class LaserBeam extends GraphicsComponent {
-    static draw(){
-	graphics_laser_beam.draw("rect", {fillColor: "#aa0000"})
+    static draw(entity){
+	graphics_laser_beam.draw("rect", {fillColor: entity.color})
     }
     static is_transparent(){return true}
     static get_graphics(){return graphics_laser_beam}
@@ -181,7 +183,7 @@ export var graphics_components = {
     ship: ShipGraphicsComponent,
     engine: EngineGraphicsComponent,
     loot: LootGraphicsComponent,
-    bullet: Debug,
+    bullet: BulletGraphicsComponent,
     missile: MissileGraphicsComponent,
     explosion: ExplosionGraphicsComponent,
     weapon: WeaponGraphicsComponent,
