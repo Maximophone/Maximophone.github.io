@@ -63,7 +63,7 @@ class Ship(Entity):
                 0,
                 100,
                 100,
-                25
+                40
             )
             particles_pool.create(
                 "fading_particle",
@@ -73,7 +73,7 @@ class Ship(Entity):
                 0,
                 50,
                 50,
-                50
+                75
             )
             self.spawn_loot(world)
 
