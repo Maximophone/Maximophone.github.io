@@ -72,7 +72,7 @@ class MissileLauncher(Weapon):
 
 
 class Laser(Weapon):
-    def __init__(self, ship, x, y, rot, length=75, dps=0.05):
+    def __init__(self, ship, x, y, rot, length=75, dps=0.02):
         super().__init__(ship, x, y, rot, False, "weapon_secondary")
         self.dps = dps
         self.length = length

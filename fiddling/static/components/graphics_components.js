@@ -1,4 +1,4 @@
-import { graphics, graphics_map, graphics_light, graphics_react, graphics_explosion } from "../graphics/graphics.js"
+import { graphics, graphics_map, graphics_light, graphics_react, graphics_explosion, graphics_laser_beam } from "../graphics/graphics.js"
 
 class GraphicsComponent {
     static get_graphics(){
@@ -62,9 +62,10 @@ class ExplosionGraphicsComponent extends GraphicsComponent {
 
 class LaserBeam extends GraphicsComponent {
     static draw(){
-	graphics.draw("rect", {fillColor: "#aa0000"})
+	graphics_laser_beam.draw("rect", {fillColor: "#aa0000"})
     }
-    static is_transparent(){ return true }
+    static is_transparent(){return true}
+    static get_graphics(){return graphics_laser_beam}
 }
 
 class LootGraphicsComponent extends GraphicsComponent {

@@ -106,13 +106,13 @@ cdef float circle_line_col(collider col_circle, collider col_line):
             # t1 is the intersection, and it's closer than t2
             # (since t1 uses -b - discriminant)
             # Impale, Poke
-            return 1.0
+            return t1
 
         # here t1 didn't intersect so we are either started
         # inside the sphere or completely past it
         if t2 >= 0 and t2 <= 1:
             # ExitWound
-            return 1.0
+            return t2
 
         # no intn: FallShort, Past, CompletelyInside
         return -1.0

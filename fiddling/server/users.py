@@ -1,6 +1,6 @@
 from .camera import Camera
 from .entities.ship import Ship
-from .entities.weapon import Cannon, MissileLauncher
+from .entities.weapon import Cannon, MissileLauncher, Laser
 from .entities.engine import Engine
 from .entities.shield import Shield
 from .entities.mouse_pointer import MousePointer
@@ -53,7 +53,11 @@ class User:
         ship.engine = engine
         weapon1 = Cannon(ship, 1, 0.5, 0.05, 100, 15)
         weapon2 = Cannon(ship, 1, -0.5, -0.05, 100, 15)
-        weapon3 = MissileLauncher(ship, 1, 0., 0., 5000, 5)
+        # Getting missile launcher or laser at random
+        if random()>0.5:
+            weapon3 = MissileLauncher(ship, 1, 0., 0., 5000, 5)
+        else:
+            weapon3 = Laser(ship, 1, 0, 0)
         shield = Shield(ship, 3, 100, 0.01, 5000)
         ship.weapons.extend([weapon1, weapon2, weapon3])
         ship.shield = shield
