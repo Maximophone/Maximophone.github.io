@@ -2,6 +2,7 @@ from .entity import Entity
 from .bullet import Bullet
 from .missile import Missile
 from .laser_beam import LaserBeam
+from .debug_entity import Debug
 from server.systems import position_system, input_system
 
 import math
@@ -71,25 +72,25 @@ class MissileLauncher(Weapon):
 
 
 class Laser(Weapon):
-    def __init__(self, ship, x, y, rot, length=50, dps=5):
+    def __init__(self, ship, x, y, rot, length=75, dps=0.05):
         super().__init__(ship, x, y, rot, False, "weapon_secondary")
         self.dps = dps
         self.length = length
         self.beam = None
 
     def update(self, world, dt):
-        if self.firing:
-            x, y = get_pos_bullet(self)
+        if self.firing and self.beam is None:
             self.beam = LaserBeam(
+                self,
                 self.parent.id,
-                x,
-                y,
-                self.parent.position.rot + self.position.rot,
+                self.position.x,
+                self.position.y,
+                self.position.rot,
                 self.length,
                 self.dps
             )
             world.entities.append(self.beam)
-        else:
+        elif not self.firing and self.beam is not None:
             self.beam.lifetime = -1
             self.beam = None
         

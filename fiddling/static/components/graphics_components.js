@@ -60,6 +60,12 @@ class ExplosionGraphicsComponent extends GraphicsComponent {
     static get_graphics(){return graphics_explosion}
 }
 
+class LaserBeam extends GraphicsComponent {
+    static draw(){
+	graphics.draw("rect", {fillColor: "#aa0000"})
+    }
+    static is_transparent(){ return true }
+}
 
 class LootGraphicsComponent extends GraphicsComponent {
     static draw(){
@@ -147,9 +153,16 @@ class Debug extends GraphicsComponent {
 }
 
 class Circle extends GraphicsComponent {
-    draw(){
-	this.graphics.draw("circle")
+    static draw(){
+	graphics.draw("circle")
     }
+}
+
+class Rect extends GraphicsComponent {
+    static draw(){
+	graphics.draw("rect")
+    }
+    static is_transparent(){return true}
 }
 
 class LightCircle extends GraphicsComponent {
@@ -176,5 +189,7 @@ export var graphics_components = {
     pointer: PointerGraphicsComponent,
     fading_particle: DebugStatic,
     circle: Circle,
-    light_circle: LightCircle
+    light_circle: LightCircle,
+    laser_beam: LaserBeam,
+    debug: Rect
 }
