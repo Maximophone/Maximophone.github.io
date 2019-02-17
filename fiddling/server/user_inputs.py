@@ -10,6 +10,7 @@ class UserInputs:
     def __init__(self):
         self._pressed_keys = {}
         self._mouse_target = MousePos(0, 0)
+        self._mouse_clicked = False
 
     def pressed_key(self, k):
         return self._pressed_keys.get(k, False)
@@ -22,6 +23,15 @@ class UserInputs:
 
     def move_mouse(self, x, y):
         self._mouse_target = MousePos(x, y)
+
+    def click_mouse(self):
+        self._mouse_clicked = True
+
+    def release_mouse(self):
+        self._mouse_clicked = False
+
+    def clicked_mouse(self):
+        return self._mouse_clicked
 
     def get_mouse_target(self, camera=None):
         if camera is not None:

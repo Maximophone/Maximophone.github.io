@@ -51,10 +51,10 @@ class EnnemySpawner(Entity):
             ai = Ship(2, x, y, 0, 17, ENNEMY_HEALTH, None, True, self.player)
             engine = Engine(ai, 10, 0.01, 0.05, True)
             ai.engine = engine
-            if random() > 0.2:
+            if random() > 0.1:
                 weapon = Cannon(ai, 1, 0, 0, 200, 10, True, color=random_color_bullet())
             else:
-                weapon = Laser(ai, 1, 0, 0, dps=0.01, ai=True, color=random_color_laser())
+                weapon = Laser(ai, 1, 0, 0, dps=0.03, ai=True, color=random_color_laser())
             ai.weapons.append(weapon)
             self.world.entities.extend([ai, engine, weapon])
             self.ennemies.extend([ai, engine, weapon])

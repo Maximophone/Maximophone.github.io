@@ -23,6 +23,12 @@ export class UserInputs {
 	_mouse_target.x = 2*e.offsetX/c.width - 1.
 	_mouse_target.y = -2*e.offsetY/c.height + 1.// Negative because we invert the canvas y
     }
+    static clicked_mouse(e){
+	socket.emit("input", {type: "mousedown"})
+    }
+    static released_mouse(e){
+	socket.emit("input", {type: "mouseup"})
+    }
     static get_mouse_target(with_camera=true){
 	if(with_camera){
 	    return {
@@ -38,6 +44,9 @@ export class UserInputs {
 addEventListener("keydown", UserInputs.press_key, false);
 addEventListener("keyup", UserInputs.release_key, true);
 addEventListener("mousemove", UserInputs.move_mouse, true);
+addEventListener("mousedown", UserInputs.clicked_mouse, true);
+addEventListener("mouseup", UserInputs.released_mouse, true);
+	
 
 export var KeyCodes = Object.freeze({
     SPACE: 32,

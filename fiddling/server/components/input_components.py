@@ -78,7 +78,8 @@ class PlayerInputWeaponComponent(InputComponent):
 
 class PlayerInputWeaponSecondaryComponent(InputComponent):
     def update(self, dt):
-        self.entity.firing = self.user_inputs.pressed_key(GameKeys.FIRE_2)
+        self.entity.firing = self.user_inputs.clicked_mouse()
+        # self.entity.firing = self.user_inputs.pressed_key(GameKeys.FIRE_2)
     
 
 class PlayerInputDebugComponent(InputComponent):

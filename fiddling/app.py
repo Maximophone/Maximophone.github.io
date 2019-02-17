@@ -47,3 +47,7 @@ def handle_input(json):
         user.inputs.release_key(json["key"])
     elif json["type"] == "mousemove":
         user.inputs.move_mouse(json["x"], json["y"])
+    elif json["type"] == "mousedown":
+        user.inputs.click_mouse()
+    elif json["type"] == "mouseup":
+        user.inputs.release_mouse()

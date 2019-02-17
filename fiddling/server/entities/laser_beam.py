@@ -14,18 +14,21 @@ class LaserBeam(Entity):
         self.lifetime = 1
         self.length = length
         self.color = color
-        self.position = position_system.get_position(self, length, 0, 0, length, 10)
+        self.position = position_system.get_position(self, length, 0, 0, length, 15)
         self.collider_component = collision_system.get_component(self, "line", length)
 
     def update(self, world, dt):
         if self.parent.lifetime <= 0:
             self.lifetime = -1
         new_length = self.length
+        collider_touched = None
         if self.collider_component.is_colliding:
             for collider, penetration in zip(
                     self.collider_component.colliding_with,
                     self.collider_component.penetrations):
                 if hasattr(collider.entity, "health") and collider.entity.id != self.id:
+                    if self.length*penetration <= new_length:
+                        collider_touched = collider
                     new_length = min(new_length, self.length*penetration)
                     pos_abs = self.position.get_absolute_pos()
                     particles_pool.create(
@@ -33,8 +36,9 @@ class LaserBeam(Entity):
                         pos_abs.x + pos_abs.size_x*math.cos(pos_abs.rot)*(-1+2*penetration),
                         pos_abs.y + pos_abs.size_x*math.sin(pos_abs.rot)*(-1+2*penetration),
                         0, 0, 7, 7, 20
-                    )   
-                    collider.entity.health -= self.dps*dt
+                    )
+        if collider_touched is not None:
+            collider_touched.entity.health -= self.dps*dt
         self.position.x = new_length
         self.position.size_x = new_length
 
