@@ -7,6 +7,7 @@ class ColliderComponent:
         self.active = True
         self.is_colliding = False
         self.colliding_with = []
+        self.penetrations = []
 
 
 class CircleColliderComponent(ColliderComponent):
@@ -23,5 +24,6 @@ class LineColliderComponent(ColliderComponent):
         self.type = "line"
         
 collider_components = {
-    "circle": CircleColliderComponent
+    "circle": CircleColliderComponent,
+    "line": LineColliderComponent
 }
