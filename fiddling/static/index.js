@@ -60,10 +60,18 @@ function draw(state){
     }
 }
 
+menu_stack = []
+
 function loop(timestamp) {
     var dt = timestamp - lastRender;
 
     fps(dt)
+    if(menu_stack.length > 0){
+	current_menu = menu_stack[menu_stack.length-1]
+	current_menu.update()
+	current_menu.draw()
+    }
+	
     if(!(global_state === undefined)){
 	draw(global_state)
     }
