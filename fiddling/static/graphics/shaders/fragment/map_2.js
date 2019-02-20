@@ -9,23 +9,23 @@ uniform float u_time;
 varying vec4 expPosition;
 
 #define iterations 17
-#define formuparam 0.53
+#define formuparam 0.46
 
-#define volsteps 20
-#define stepsize 0.1
+#define volsteps 6
+#define stepsize 0.15
 
 #define zoom   0.8
 #define tile   0.85
 #define speed  0.010 
 
-#define brightness 0.0015
+#define brightness 0.0010
 #define darkmatter 0.300
-#define distfading 0.730
+#define distfading 0.630
 #define saturation 0.850
 
 #define GRID_SPACE 0.2
 #define GRID_WIDTH 0.005
-#define GRID_COLOR vec4(.2, .2, .2, 1.);
+#define GRID_COLOR vec4(.1, .1, .1, 1.);
 
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord, in vec2 position )
@@ -64,7 +64,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord, in vec2 position )
 		}
 		float dm=max(0.,darkmatter-a*a*.001); //dark matter
 		a*=a*a; // add contrast
-		if (r>6) fade*=1.-dm; // dark matter, don't render near
+		//if (r>6) fade*=1.-dm; // dark matter, don't render near
 		//v+=vec3(dm,dm*.5,0.);
 		v+=fade;
 		v+=vec3(s,s*s,s*s*s*s)*a*brightness*fade; // coloring based on distance
