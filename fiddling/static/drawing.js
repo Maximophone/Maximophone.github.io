@@ -87,8 +87,8 @@ class Painter {
 	    x: 0,
 	    y: 0,
 	    rot: 0,
-	    size_x: 100,
-	    size_y: 100
+	    size_x: 1,
+	    size_y: 1
 	}, entities)
 	var i = 0
 	var transparent_components = []

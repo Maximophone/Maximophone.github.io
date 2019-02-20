@@ -60,7 +60,7 @@ function draw(state){
     }
 }
 
-menu_stack = []
+var menu_stack = []
 
 function loop(timestamp) {
     var dt = timestamp - lastRender;
